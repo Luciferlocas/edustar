@@ -1,4 +1,4 @@
-import Background from "@/components/background";
+import Background from "@/components/Background";
 import { Input, Button } from "@nextui-org/react";
 import Link from "next/link";
 
@@ -13,7 +13,7 @@ export default function Home() {
         <div className="absolute hue-rotate-90 opacity-50">
           <Background />
         </div>
-        <div className="rounded-xl border-1 border-rose-200 py-24 sm:w-[25em] w-2/3 backdrop-blur-2xl flex flex-col gap-8">
+        <div className="rounded-xl border-[0.5px] border-rose-200 py-24 sm:w-[25em] w-2/3 backdrop-blur-2xl flex flex-col gap-8">
           <h1 className="text-3xl font-bold text-center drop-shadow-2xl">
             Login
           </h1>
