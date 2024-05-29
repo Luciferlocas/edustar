@@ -8,7 +8,14 @@ const config = {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        script: ["Kaushan Script", "cursive"],
+      },
+      rotate: {
+        "25": "25deg",
+      },
+    },
   },
   darkMode: "class",
   plugins: [nextui()],
