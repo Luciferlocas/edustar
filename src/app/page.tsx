@@ -22,10 +22,10 @@ export default function Home() {
       <div className="z-0 w-[15em] blur-3xl absolute md:bottom-[15%] -bottom-[2%] md:right-[15%] -right-[5%] aspect-square bg-gray-400 rounded-full opacity-15"></div>
 
       <div className="w-screen min-h-screen z-20 flex justify-center items-center">
-        <div className="absolute grayscale opacity-50">
+        <div className="absolute grayscale opacity-50 sm:scale-100 scale-50 sm:-top-3/4 -top-1/2">
           <Background />
         </div>
-        <div className="rounded-xl border-[0.5px] border-zinc-600 sm:py-24 py-12 sm:w-[25em] w-2/3 backdrop-blur-xl flex flex-col gap-8">
+        <div className="rounded-xl border-[0.5px] border-zinc-600 py-24 sm:w-[25em] w-2/3 backdrop-blur-xl flex flex-col gap-8">
           <h1 className="text-3xl font-bold text-center drop-shadow-2xl">
             Login
           </h1>
