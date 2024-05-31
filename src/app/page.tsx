@@ -18,9 +18,8 @@ export default function Home() {
 
   return (
     <main className="relative w-screen min-h-screen grid place-content-center overflow-hidden">
-      <div className="z-0 w-[14em] absolute md:top-[8%] -top-[4%] md:left-[10%] -left-[20%] aspect-square bg-zinc-400 rounded-full opacity-15"></div>
-      <div className="z-0 w-[15em] absolute md:bottom-[15%] -bottom-[2%] md:right-[15%] -right-[5%] aspect-square bg-gray-400 rounded-full opacity-15"></div>
-      <div className="fixed w-screen min-h-screen backdrop-blur-3xl z-10"></div>
+      <div className="z-0 w-[14em] blur-3xl absolute md:top-[8%] -top-[4%] md:left-[10%] -left-[20%] aspect-square bg-zinc-400 rounded-full opacity-15"></div>
+      <div className="z-0 w-[15em] blur-3xl absolute md:bottom-[15%] -bottom-[2%] md:right-[15%] -right-[5%] aspect-square bg-gray-400 rounded-full opacity-15"></div>
 
       <div className="w-screen min-h-screen z-20 flex justify-center items-center">
         <div className="absolute grayscale opacity-50">
