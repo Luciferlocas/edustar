@@ -1,53 +1,32 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, FormEvent } from "react";
 import Background from "@/components/Background";
 import { Input, Button } from "@nextui-org/react";
 import Link from "next/link";
-import axios from "axios";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
-  const grant_type = "password";
+  const { login, loading } = useAuth();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const target = e.target as typeof e.target & {
-      username: { value: string };
-      password: { value: string };
-    };
-
-    const user = target.username.value;
-    const password = target.password.value;
-
-    await login(user, password);
-  };
-
-  const login = async (user: string, password: string) => {
-    setLoading(true);
-    try {
-      const response = await axios.post(`https://beta.edumarshal.com/Token`, {
-        grant_type: grant_type,
-        user,
-        password,
-      });
-      console.log(response);
-    } finally {
-      setLoading(false);
-    }
+    await login(username, password);
   };
 
   return (
     <main className="relative w-screen min-h-screen grid place-content-center overflow-hidden">
-      <div className="z-0 w-[20em] absolute md:top-[8%] -top-[4%] md:left-[10%] -left-[20%] aspect-square bg-yellow-600 rounded-full opacity-15"></div>
-      <div className="z-0 w-[15em] absolute md:bottom-[18%] -bottom-[2%] md:right-[20%] -right-[5%] aspect-square bg-rose-600 rounded-full opacity-15"></div>
+      <div className="z-0 w-[14em] absolute md:top-[8%] -top-[4%] md:left-[10%] -left-[20%] aspect-square bg-zinc-400 rounded-full opacity-15"></div>
+      <div className="z-0 w-[15em] absolute md:bottom-[15%] -bottom-[2%] md:right-[15%] -right-[5%] aspect-square bg-gray-400 rounded-full opacity-15"></div>
       <div className="fixed w-screen min-h-screen backdrop-blur-3xl z-10"></div>
 
       <div className="w-screen min-h-screen z-20 flex justify-center items-center">
-        <div className="absolute hue-rotate opacity-50">
+        <div className="absolute grayscale opacity-50">
           <Background />
         </div>
-        <div className="rounded-xl border-[0.5px] border-l-yellow-300 border-t-yellow-300 border-b-orange-500 border-r-orange-500 sm:py-24 py-12 sm:w-[25em] w-2/3 backdrop-blur-2xl flex flex-col gap-8">
+        <div className="rounded-xl border-[0.5px] border-zinc-600 sm:py-24 py-12 sm:w-[25em] w-2/3 backdrop-blur-xl flex flex-col gap-8">
           <h1 className="text-3xl font-bold text-center drop-shadow-2xl">
             Login
           </h1>
@@ -57,6 +36,7 @@ export default function Home() {
           >
             <Input
               isRequired
+              onChange={(e) => setUsername(e.target.value)}
               name="username"
               variant="bordered"
               labelPlacement="outside"
@@ -65,6 +45,7 @@ export default function Home() {
             />
             <Input
               isRequired
+              onChange={(e) => setPassword(e.target.value)}
               name="password"
               type="password"
               variant="bordered"
