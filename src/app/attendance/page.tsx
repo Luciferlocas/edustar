@@ -6,7 +6,7 @@ import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
 
-const page = () => {
+const Dashboard = () => {
   const { res } = useAuth();
   if (!res) redirect("/");
 
@@ -30,4 +30,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Dashboard;
