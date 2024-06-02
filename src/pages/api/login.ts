@@ -1,9 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import { setCookie } from "cookies-next";
-import * as dotenv from "dotenv";
-
-dotenv.config({ path: ".env.local" });
 
 export default async function handler(
   req: NextApiRequest,

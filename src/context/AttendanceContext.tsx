@@ -10,10 +10,12 @@ import React, {
 import axios from "axios";
 import { useAuth } from "./AuthContext";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 interface AttendanceContextType {
   loading: boolean;
+  AttendanceData: () => Promise<void>;
+  attendance: any;
 }
 
 const AttendanceContext = createContext<AttendanceContextType | undefined>(
@@ -30,7 +32,7 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
   const { res } = useAuth();
   const [loading, setLoading] = useState(false);
   const [userId, setUserId] = useState(null);
-  const router = useRouter();
+  const [attendance, setAttendance] = useState([]);
 
   useEffect(() => {
     if (res) {
@@ -39,40 +41,34 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
     }
   }, [res]);
 
+  const accessToken = res?.access_token;
+  const sessionId = res?.SessionId;
+  const xToken = res?.X_Token;
+
   const AttendanceData = async () => {
-    if (!userId) {
-      toast.error("Please login!");
-      router.push("/");
-    }
+    setLoading(true);
 
     try {
-      const response = await axios.get(
-        `https://beta.edumarshal.com/api/SubjectAttendance/GetPresentAbsentStudent?isDateWise=${false}&termId=${0}&userId=${userId}&y=${0}`,
-        {
-          headers: {
-            Cookie: `_ga_P21KD3ESV2=GS1.1.1717220027.3.0.1717220027.0.0.0; _ga=GA1.2.257840654.1716482344; _gid=GA1.2.287587932.1716482344`,
-            Authorization: `Bearer ${res?.access_token}`,
-            "X-Wb": 1,
-            Sessionid: `${res?.SessionId}`,
-            "X-Contextid": 194,
-            "X-Userid": userId,
-            X_token: res?.X_Token,
-            "X-Rx": 1,
-          },
-        }
-      );
-      console.log(response);
+      const response = await axios.post("/api/attendance", {
+        userId,
+        accessToken,
+        sessionId,
+        xToken,
+      });
+      if (response.status === 200) {
+        setAttendance(response.data);
+      } else {
+        toast.error("Failed to fetch attendance");
+      }
     } catch (error) {
-      console.error("Error fetching attendance data:", error);
+      toast.error("Server not responponding..");
+    } finally {
+      setLoading(false);
     }
   };
 
-  useEffect(() => {
-    AttendanceData();
-  }, [userId]);
-
   return (
-    <AttendanceContext.Provider value={{ loading }}>
+    <AttendanceContext.Provider value={{ loading, AttendanceData, attendance }}>
       {children}
     </AttendanceContext.Provider>
   );
