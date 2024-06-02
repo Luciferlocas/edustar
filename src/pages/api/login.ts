@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
-import { setCookie } from "cookies-next";
 
 export default async function handler(
   req: NextApiRequest,
@@ -30,14 +29,6 @@ export default async function handler(
     );
 
     if (response.data) {
-      setCookie("incaseifyou", JSON.stringify(response.data), {
-        req,
-        res,
-        secure: true,
-        httpOnly: true,
-        sameSite: "strict",
-      });
-
       return res.status(200).json(response.data);
     } else {
       return res.status(400).json({ message: "Invalid response from server" });

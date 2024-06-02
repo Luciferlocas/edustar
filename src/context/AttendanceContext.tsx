@@ -1,21 +1,16 @@
 "use client";
 
-import React, {
-  createContext,
-  useState,
-  useContext,
-  ReactNode,
-  useEffect,
-} from "react";
+import React, { createContext, useState, useContext, ReactNode } from "react";
 import axios from "axios";
-import { useAuth } from "./AuthContext";
 import toast from "react-hot-toast";
-import { redirect } from "next/navigation";
+import { useAuth } from "./AuthContext";
 
 interface AttendanceContextType {
   loading: boolean;
   AttendanceData: () => Promise<void>;
   attendance: any;
+  profile: any;
+  particular: any;
 }
 
 const AttendanceContext = createContext<AttendanceContextType | undefined>(
@@ -29,34 +24,29 @@ interface AttendanceProviderProps {
 const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
   children,
 }) => {
-  const { res } = useAuth();
+  const { data } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [userId, setUserId] = useState(null);
   const [attendance, setAttendance] = useState([]);
-
-  useEffect(() => {
-    if (res) {
-      const extractedUserId = res?.["X-UserId"];
-      setUserId(extractedUserId);
-    }
-  }, [res]);
-
-  const accessToken = res?.access_token;
-  const sessionId = res?.SessionId;
-  const xToken = res?.X_Token;
+  const [profile, setProfile] = useState([]);
+  const [particular, setParticular] = useState([]);
 
   const AttendanceData = async () => {
+    if (!data["X-UserId"]) return;
     setLoading(true);
-
     try {
-      const response = await axios.post("/api/attendance", {
-        userId,
-        accessToken,
-        sessionId,
-        xToken,
+      const response = await axios.get("/api/attendance", {
+        params: {
+          userId: data["X-UserId"],
+          accessToken: data.access_token,
+          sessionId: data.SessionId,
+          xToken: data.X_Token,
+        },
       });
+
       if (response.status === 200) {
         setAttendance(response.data);
+        setParticular(response.data.stdSubAtdDetails.subjects);
+        setProfile(response.data.stdSubAtdDetails.studentSubjectAttendance);
       } else {
         toast.error("Failed to fetch attendance");
       }
@@ -68,7 +58,9 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
   };
 
   return (
-    <AttendanceContext.Provider value={{ loading, AttendanceData, attendance }}>
+    <AttendanceContext.Provider
+      value={{ loading, AttendanceData, attendance, profile, particular }}
+    >
       {children}
     </AttendanceContext.Provider>
   );

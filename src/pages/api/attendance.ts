@@ -5,11 +5,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "POST") {
+  if (req.method !== "GET") {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { userId, accessToken, sessionId, xToken } = req.body;
+  const { userId, accessToken, sessionId, xToken } = req.query;  
 
   if (!userId || !accessToken || !sessionId || !xToken) {
     return res.status(400).json({ message: "Missing required parameters" });
@@ -17,15 +17,18 @@ export default async function handler(
 
   try {
     const response = await axios.get(
-      `${
-        process.env.URL
-      }/api/SubjectAttendance/GetPresentAbsentStudent?isDateWise=${false}&termId=${0}&userId=${userId}&y=${0}`,
-      {
+      `${process.env.URL}/api/SubjectAttendance/GetPresentAbsentStudent`, {
+        params: {
+          isDateWise: false,
+          termId: 0,
+          userId: userId,
+          y: 0,
+        },
         headers: {
           Cookie: `_ga_P21KD3ESV2=GS1.1.1717220027.3.0.1717220027.0.0.0; _ga=GA1.2.257840654.1716482344; _gid=GA1.2.287587932.1716482344`,
           Authorization: `Bearer ${accessToken}`,
           "X-Wb": 1,
-          Sessionid: `${sessionId}`,
+          Sessionid: sessionId,
           "X-Contextid": 194,
           "X-Userid": userId,
           X_token: xToken,

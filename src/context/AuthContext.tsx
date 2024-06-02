@@ -1,14 +1,22 @@
 "use client";
 
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
+import Cookies from "js-cookie";
 
 interface AuthContextType {
   loading: boolean;
   login: (username: string, password: string) => Promise<void>;
-  res: any;
+  data: any;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -19,19 +27,33 @@ interface AuthProviderProps {
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState(false);
-  const [res, setRes] = useState<any>(null);
+  const [data, setData] = useState<any>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const res = Cookies.get("user");
+    if (res) {
+      setData(JSON.parse(res));
+    }
+  }, []);
 
   const login = async (username: string, password: string) => {
     setLoading(true);
     try {
-      const response = await axios.post('/api/login', { username, password });
+      const response = await axios.post("/api/login", { username, password });
 
-      if (response.status === 200) {        
-        setRes(response.data);
+      if (response.status === 200) {
+        Cookies.set("user", JSON.stringify(response.data), {
+          expires: 331,
+          sameSite: "Strict",
+          secure: true,
+        });
+        setData(response.data);
         router.push("/attendance");
       } else {
-        toast.error("Login failed. Please check your credentials and try again.");
+        toast.error(
+          "Login failed. Please check your credentials and try again."
+        );
       }
     } catch (error) {
       toast.error("Login failed. Please check your credentials and try again.");
@@ -40,8 +62,14 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const logout = () => {
+    Cookies.remove("user");
+    toast.error("Login again!");
+    router.push("/");
+  };
+
   return (
-    <AuthContext.Provider value={{ loading, login, res }}>
+    <AuthContext.Provider value={{ loading, login, logout, data }}>
       <Toaster
         position="bottom-right"
         toastOptions={{
@@ -51,7 +79,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             color: "#b0b0b0",
             backgroundColor: "black",
             borderRadius: "4px",
-            fontSize: "14px"
+            fontSize: "14px",
           },
           error: {
             iconTheme: {
