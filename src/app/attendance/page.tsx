@@ -1,14 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button, Spinner } from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
 import { useAttendance } from "@/context/AttendanceContext";
 import { useAuth } from "@/context/AuthContext";
+import Navmenu from "@/components/Navbar";
 
 const Dashboard = () => {
-  const { data, logout } = useAuth();
+  const { data } = useAuth();
   const { loading, AttendanceData, attendance, profile, particular } =
     useAttendance();
   const [isInitialLoad, setIsInitialLoad] = useState(true);
@@ -30,17 +31,7 @@ const Dashboard = () => {
     }
   }, [data, attendance, isInitialLoad]);
 
-  return (
-    <div className="grid place-content-center min-h-screen w-screen">
-      {loading ? (
-        <Spinner />
-      ) : (
-        <Button onClick={logout} variant="flat" color="danger">
-          Logout
-        </Button>
-      )}
-    </div>
-  );
+  return <div className="px-2 py-4">{loading ? <Spinner /> : <Navmenu />}</div>;
 };
 
 export default Dashboard;
