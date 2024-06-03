@@ -3,9 +3,10 @@ import {
   CardFooter,
   CardHeader,
   Skeleton,
-  Image,
 } from "@nextui-org/react";
 import React from "react";
+import bg from "../../public/bg.jpg"
+import Image from "next/image";
 
 interface Props {
   loading: boolean;
@@ -27,8 +28,11 @@ const Acard = (props: Props) => {
         </Skeleton>
       </CardHeader>
       <Image
-        className="max-w-80 -z-0 h-full"
-        src="https://img.freepik.com/free-vector/white-outline-geometric-hexagonal-bipyramid-background-vector_53876-176699.jpg?w=996&t=st=1717439318~exp=1717439918~hmac=e8919ddd4429887e3d46c41dc861cde724b09c28d983892cedcf66a84478a194"
+        className="-z-0"
+        height={160}
+        width={320}
+        alt="background"
+        src={bg}
       />
       <CardFooter className="absolute bg-black/40 bottom-0 z-10 w-full border-t-[1px] border-zinc-800">
         <Skeleton isLoaded={!props.loading} className="rounded-md">
