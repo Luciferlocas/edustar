@@ -5,11 +5,14 @@ import Background from "@/components/Background";
 import { Input, Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
+import { CutEye } from "@/components/CutEye";
+import { Eye } from "@/components/Eye";
 
 export default function Home() {
   const { login, loading } = useAuth();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,15 +20,15 @@ export default function Home() {
   };
 
   return (
-    <main className="relative w-screen min-h-screen grid place-content-center overflow-hidden">
-      <div className="z-0 w-[14em] blur-3xl absolute md:top-[8%] -top-[4%] md:left-[10%] -left-[20%] aspect-square bg-zinc-400 rounded-full opacity-15"></div>
-      <div className="z-0 w-[15em] blur-3xl absolute md:bottom-[15%] -bottom-[2%] md:right-[15%] -right-[5%] aspect-square bg-gray-400 rounded-full opacity-15"></div>
+    <main className="relative w-screen min-h-screen grid place-content-center overflow-hidden bg-black">
+      <div className="z-0 w-[14em] blur-3xl absolute md:top-[8%] -top-[4%] md:left-[10%] -left-[20%] aspect-square bg-primary-300 rounded-full opacity-15"></div>
+      <div className="z-0 w-[15em] blur-3xl absolute md:bottom-[15%] -bottom-[2%] md:right-[15%] -right-[5%] aspect-square bg-primary-300 rounded-full opacity-15"></div>
 
       <div className="w-screen min-h-screen z-20 flex justify-center items-center">
-        <div className="absolute grayscale opacity-50 sm:scale-100 scale-50 sm:-top-3/4 -top-1/2">
+        <div className="absolute hue-rotate-180 opacity-50 sm:scale-100 scale-50 sm:-top-3/4 -top-1/2">
           <Background />
         </div>
-        <div className="rounded-xl border-[0.5px] border-zinc-600 py-24 sm:w-[25em] w-2/3 backdrop-blur-xl flex flex-col gap-8">
+        <div className="dark rounded-xl border-[0.5px] border-primary-700 py-24 sm:w-[25em] w-2/3 backdrop-blur-xl flex flex-col gap-8 text-white">
           <h1 className="text-3xl font-bold text-center drop-shadow-2xl">
             Login
           </h1>
@@ -46,7 +49,16 @@ export default function Home() {
               isRequired
               onChange={(e) => setPassword(e.target.value)}
               name="password"
-              type="password"
+              endContent={
+                <button
+                  className="focus:outline-none"
+                  type="button"
+                  onClick={() => setIsVisible(!isVisible)}
+                >
+                  {isVisible ? <CutEye /> : <Eye />}
+                </button>
+              }
+              type={isVisible ? "text" : "password"}
               variant="bordered"
               labelPlacement="outside"
               label="Password"

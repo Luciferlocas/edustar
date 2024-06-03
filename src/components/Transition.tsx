@@ -1,13 +1,9 @@
 "use client";
 
-import { useAttendance } from "@/context/AttendanceContext";
-import { Spinner } from "@nextui-org/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 const PageTransition = ({ children }: { children: React.ReactNode }) => {
-  const { loading } = useAttendance();
   const pathname = usePathname();
   const isLoginPage = pathname === "/";
 
@@ -15,8 +11,6 @@ const PageTransition = ({ children }: { children: React.ReactNode }) => {
     <>
       {isLoginPage ? (
         <>{children}</>
-      ) : loading ? (
-        <Spinner />
       ) : (
         <AnimatePresence mode="wait">
           <motion.div
