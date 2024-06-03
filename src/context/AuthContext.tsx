@@ -34,6 +34,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const res = Cookies.get("user");
     if (res) {
       setData(JSON.parse(res));
+      router.push("/attendance");
     }
   }, []);
 
