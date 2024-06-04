@@ -6,17 +6,24 @@ import { redirect } from "next/navigation";
 import { useAttendance } from "@/context/AttendanceContext";
 import { useAuth } from "@/context/AuthContext";
 import Navmenu from "@/components/Navbar";
-import Acard from "@/components/Acard";
+import SubjectCard from "@/components/SubjectCard";
 import { ScrollShadow } from "@nextui-org/react";
 import Graph from "@/components/Graph";
 import { motion } from "framer-motion";
+import TotalCard from "@/components/TotalCard";
 
 const Dashboard = () => {
   const { data } = useAuth();
-  const { loading, AttendanceData, attendance, profile, particular } =
+  const { loading, AttendanceData, attendance, particular, pdp } =
     useAttendance();
   const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const cardsToRender = particular.length > 0 ? particular : new Array(10).fill(0);
+  const cardsToRender =
+    particular.length > 0 ? particular : new Array(10).fill(0);
+  const total = attendance.stdSubAtdDetails || {
+    overallLecture: 0,
+    overallPresent: 0,
+  };
+  const pdptrue = pdp.filter((item: any) => item.isInAbsent).length;
 
   useEffect(() => {
     if (isInitialLoad) {
@@ -43,29 +50,75 @@ const Dashboard = () => {
   return (
     <div className="px-4 py-6 min-h-screen w-screen bg-black flex flex-col gap-5">
       <Navmenu />
-      <ScrollShadow
-        orientation="vertical"
-        hideScrollBar
-        className="flex flex-col h-[calc(100vh-8rem)] gap-4 self-end"
-      >
-        {cardsToRender.map((e: any, i: number) => (
+      <main className="flex md:flex-row flex-col-reverse gap-4 w-full">
+        <ScrollShadow
+          orientation="vertical"
+          hideScrollBar
+          className="flex flex-col gap-4 w-full md:h-[calc(100vh-7rem)] h-full min-w-[20rem]"
+        >
+          <div className="flex lg:flex-row flex-col gap-4">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={cardVariants}
+              transition={{ duration: 0.5, delay: 1 }}
+              className="w-full z-50"
+            >
+              <TotalCard
+                loading={loading}
+                total={total.overallLecture}
+                present={total.overallPresent}
+                name="Total Attendance"
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 100 }}
+              animate="visible"
+              variants={cardVariants}
+              transition={{ duration: 0.5, delay: 1 }}
+              className="w-full"
+            >
+              <TotalCard
+                loading={loading}
+                total={pdp.length}
+                present={pdp.length - pdptrue}
+                name="PDP Attendance"
+              />
+            </motion.div>
+          </div>
           <motion.div
-            key={i}
-            initial="hidden"
-            animate="visible"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
             variants={cardVariants}
-            transition={{ duration: 0.5, delay: i * 0.5 }}
+            transition={{ duration: 0.5, delay: 2 }}
+            className="w-full"
           >
-            <Acard
-              loading={loading}
-              name={e.name}
-              total={e.totalLeactures}
-              present={e.presentLeactures}
-            />
+            <Graph />
           </motion.div>
-        ))}
-      </ScrollShadow>
-      <Graph />
+        </ScrollShadow>
+        <ScrollShadow
+          orientation="horizontal"
+          hideScrollBar
+          className="flex md:flex-col flex-row gap-4 md:h-[calc(100vh-7rem)] h-40 min-w-[20rem]"
+        >
+          {cardsToRender.map((e: any, i: number) => (
+            <motion.div
+              key={i}
+              initial="hidden"
+              animate="visible"
+              variants={cardVariants}
+              transition={{ duration: 0.5, delay: i * 0.5 }}
+            >
+              <SubjectCard
+                loading={loading}
+                name={e.name}
+                total={e.totalLeactures}
+                present={e.presentLeactures}
+              />
+            </motion.div>
+          ))}
+        </ScrollShadow>
+      </main>
     </div>
   );
 };

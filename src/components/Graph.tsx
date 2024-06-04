@@ -1,11 +1,10 @@
-import React from 'react'
+import React from "react";
+import { Card } from "@nextui-org/react";
 
 const Graph = () => {
   return (
-    <div>
-      
-    </div>
-  )
-}
+    <Card className="bg-black border-[0.5px] border-zinc-600 w-full h-[36em] hover:border-white"></Card>
+  );
+};
 
-export default Graph
+export default Graph;

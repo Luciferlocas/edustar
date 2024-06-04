@@ -41,18 +41,19 @@ const Navmenu = () => {
           className="w-full"
           variant="bordered"
           classNames={{
-            inputWrapper: "bg-black border-[0.5px] border-zinc-800 hover:bg-none",
+            inputWrapper:
+              "bg-black border-[0.5px] border-zinc-600 hover:bg-none",
           }}
         />
         <Card
-          className="sm:grid place-content-center bg-gradient-to-br from-60% from-black via-zinc-800 to-black border-[0.5px] border-zinc-800 lg:col-span-3 col-span-8 text-center text-sm shadow-none h-10 md:min-w-80 min-w-40 hidden"
+          className="sm:grid place-content-center bg-gradient-to-br from-60% from-black via-zinc-800 to-black border-[0.5px] border-zinc-600 lg:col-span-3 col-span-8 text-center text-sm shadow-none h-10 md:min-w-80 min-w-40 hidden"
           radius="md"
         >
           {moment(new Date()).format("DD MMM YYYY  h:mm A")}
         </Card>
         <Dropdown
           classNames={{
-            content: "bg-black border-[0.5px] border-zinc-800",
+            content: "bg-black border-[0.5px] border-zinc-600",
           }}
           backdrop="blur"
           placement="bottom-end"
