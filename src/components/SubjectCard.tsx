@@ -18,6 +18,11 @@ interface Props {
 }
 
 const Subjectcard = (props: Props) => {
+  const perc = ((props.present || 0) * 100) / props.total || 0;
+  const danger = perc <= 50;
+  const warn = perc < 75 && perc > 50;
+  const primary = perc >= 75;
+  
   return (
     <Card
       isFooterBlurred
@@ -48,12 +53,14 @@ const Subjectcard = (props: Props) => {
             classNames={{
               base: "max-w-48",
               track: "drop-shadow-md",
-              indicator: "bg-gradient-to-r from-black to-white",
+              indicator: `bg-gradient-to-r from-black ${
+                danger && "to-rose-700"
+              } ${warn && "to-warning-300"} ${primary && "to-primary-300"}`,
               label: "tracking-wider font-medium text-default-600",
               value: "text-foreground/60",
             }}
             label=" "
-            value={((props.present || 0) * 100) / props.total || 0}
+            value={perc}
             showValueLabel={true}
           />
         </Skeleton>

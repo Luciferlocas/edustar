@@ -1,10 +1,22 @@
 import React from "react";
-import { Card } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
+import LineChart from "./LineChart";
+import BarChart from "./BarChart";
 
-const Graph = () => {
+const GraphCard = () => {
   return (
-    <Card className="bg-black border-[0.5px] border-zinc-600 w-full h-[36em] hover:border-white"></Card>
+    <Card className="bg-black border-[0.5px] border-zinc-600 w-full min-h-[23rem] hover:border-white">
+      <CardHeader className="font-bold text-2xl border-b-1 border-zinc-600">
+        Graphical Analysis
+      </CardHeader>
+      <CardBody className="flex lg:flex-row flex-col-reverse w-full lg:gap-1 gap-2">
+        <LineChart />
+        <Divider orientation="vertical" className="lg:flex hidden w-[0.5px] bg-zinc-600 min-h-[17.5rem]"/>
+        <Divider orientation="horizontal" className="lg:hidden flex bg-zinc-600"/>
+        <BarChart/>
+      </CardBody>
+    </Card>
   );
 };
 
-export default Graph;
+export default GraphCard;

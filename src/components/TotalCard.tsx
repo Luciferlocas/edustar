@@ -18,6 +18,11 @@ interface Props {
 }
 
 const TotalCard = (props: Props) => {
+  const perc = ((props.present || 0) * 100) / props.total || 0;
+  const danger = perc <= 50;
+  const warn = perc < 75 && perc > 50;
+  const primary = perc >= 75;
+
   return (
     <Card
       isPressable
@@ -25,22 +30,22 @@ const TotalCard = (props: Props) => {
       className="bg-black border-[0.5px] border-zinc-600 h-60 hover:border-white w-full"
     >
       <CardHeader className="absolute z-10 top-1 font-bold text-2xl text-left">
-        <Skeleton isLoaded={!props.loading} className="rounded-full">
+        <Skeleton isLoaded={!props.loading} className="rounded-md">
           {props.loading ? "Total Attendance" : props.name || "Attendance"}
         </Skeleton>
       </CardHeader>
       <CardBody className="absolute z-10 top-20 flex gap-3 text-lg">
-        <Skeleton isLoaded={!props.loading} className="rounded-md">
+        <Skeleton isLoaded={!props.loading} className="rounded-md max-w-96">
           <p>Total Lectures - {props.total}</p>
         </Skeleton>
-        <Skeleton isLoaded={!props.loading} className="rounded-md">
+        <Skeleton isLoaded={!props.loading} className="rounded-md max-w-96">
           <p>Total Lectures Attended - {props.present}</p>
         </Skeleton>
       </CardBody>
       <Image
         className="-z-0 w-auto h-auto"
         height={320}
-        width={580}
+        width={700}
         alt="background"
         src={bg}
         priority
@@ -53,12 +58,14 @@ const TotalCard = (props: Props) => {
             classNames={{
               base: "w-60",
               track: "drop-shadow-md",
-              indicator: "bg-gradient-to-r from-black to-white",
+              indicator: `bg-gradient-to-r from-black ${
+                danger && "to-red-800"
+              } ${warn && "to-warning-300"} ${primary && "to-primary-300"}`,
               label: "tracking-wider font-medium text-default-600",
               value: "text-foreground/60",
             }}
             label=" "
-            value={((props.present || 0) * 100) / props.total || 0}
+            value={perc}
             showValueLabel={true}
           />
         </Skeleton>

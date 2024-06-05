@@ -8,9 +8,10 @@ import { useAuth } from "@/context/AuthContext";
 import Navmenu from "@/components/Navbar";
 import SubjectCard from "@/components/SubjectCard";
 import { ScrollShadow } from "@nextui-org/react";
-import Graph from "@/components/Graph";
+import GraphCard from "@/components/Graph";
 import { motion } from "framer-motion";
 import TotalCard from "@/components/TotalCard";
+
 
 const Dashboard = () => {
   const { data } = useAuth();
@@ -23,7 +24,7 @@ const Dashboard = () => {
     overallLecture: 0,
     overallPresent: 0,
   };
-  const pdptrue = pdp.filter((item: any) => item.isInAbsent).length;
+  const pdpTrue = pdp.filter((item: any) => item.isInAbsent).length;
 
   useEffect(() => {
     if (isInitialLoad) {
@@ -81,7 +82,7 @@ const Dashboard = () => {
               <TotalCard
                 loading={loading}
                 total={pdp.length}
-                present={pdp.length - pdptrue}
+                present={pdp.length - pdpTrue}
                 name="PDP Attendance"
               />
             </motion.div>
@@ -93,7 +94,7 @@ const Dashboard = () => {
             transition={{ duration: 0.5, delay: 2 }}
             className="w-full"
           >
-            <Graph />
+            <GraphCard />
           </motion.div>
         </ScrollShadow>
         <ScrollShadow

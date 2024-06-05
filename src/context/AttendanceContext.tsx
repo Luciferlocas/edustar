@@ -19,6 +19,14 @@ interface AttendanceContextType {
   particular: any;
   student: number;
   pdp: any;
+  graphData: any;
+  aggregatedData: any;
+}
+
+interface AggregatedRecord {
+  absentDate: string;
+  totalAbsent: number;
+  totalPresent: number;
 }
 
 const AttendanceContext = createContext<AttendanceContextType | undefined>(
@@ -39,6 +47,36 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
   const [particular, setParticular] = useState([]);
   const [student, setStudent] = useState<number>(0);
   const [pdp, setPdp] = useState([]);
+  const [everyday, setEveryday] = useState([]);
+  const aggregatedData: { [key: string]: AggregatedRecord } = {};
+
+  everyday.forEach((item: any) => {
+    const { isAbsent, absentDate } = item;
+    if (!aggregatedData[absentDate]) {
+      aggregatedData[absentDate] = {
+        absentDate,
+        totalAbsent: 0,
+        totalPresent: 0,
+      };
+    }
+    if (isAbsent) aggregatedData[absentDate].totalAbsent += 1;
+    else aggregatedData[absentDate].totalPresent += 1;
+  });
+
+  let pAbsent = 0;
+  let pPresnt = 0;
+
+  const graphData: AggregatedRecord[] = Object.values(aggregatedData).map(
+    (record) => {
+      pAbsent += record.totalAbsent;
+      pPresnt += record.totalPresent;
+      return {
+        absentDate: record.absentDate,
+        totalAbsent: pAbsent,
+        totalPresent: pPresnt,
+      };
+    }
+  );
 
   useEffect(() => {
     if (student) {
@@ -66,6 +104,9 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
         setStudent(
           response.data.stdSubAtdDetails.studentSubjectAttendance[0]
             .admissionNumber
+        );
+        setEveryday(
+          response.data.attendanceData.concat(response.data.extraLectures)
         );
       } else {
         toast.error("Failed to fetch attendance");
@@ -113,6 +154,8 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
         particular,
         student,
         pdp,
+        graphData,
+        aggregatedData,
       }}
     >
       {children}
