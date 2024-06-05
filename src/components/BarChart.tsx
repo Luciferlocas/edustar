@@ -99,7 +99,7 @@ const BarChart: React.FC = () => {
 
   return (
     <div className="lg:w-1/2 w-full">
-      <Bar options={options} data={chartData} />
+      <Bar className="min-h-72" options={options} data={chartData} />
     </div>
   );
 };

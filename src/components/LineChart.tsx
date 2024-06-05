@@ -108,7 +108,7 @@ const LineChart: React.FC = () => {
 
   return (
     <div className="lg:w-1/2 w-full">
-      <Line options={options} data={chartData} />
+      <Line className="min-h-72" options={options} data={chartData} />
     </div>
   );
 };
