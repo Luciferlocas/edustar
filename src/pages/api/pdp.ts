@@ -32,14 +32,18 @@ export default async function handler(
           "X-Userid": userId,
           X_token: xToken,
           "X-Rx": 1,
-          Referer: process.env.REFER
+          Referer: process.env.REFER,
         },
       }
     );
 
     res.status(200).json(response.data);
-  } catch (error) {
-    console.error("Error fetching attendance data:", error);
+  } catch (error: any) {
+    console.error("Error during API call:", error);
+
+    if (error.code === "ENOTFOUND" || error.code === "ECONNREFUSED") {
+      return res.status(503).json({ message: "No internet connection." });
+    }
     res.status(500).json({ message: "Internal Server Error" });
   }
 }

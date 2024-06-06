@@ -34,10 +34,9 @@ const Dashboard = () => {
     if (!data) {
       redirect("/");
     } else if (attendance.length === 0) {
-      const callFunction = AttendanceData();
-      toast.promise(callFunction, {
+      toast.promise(AttendanceData(), {
         loading: "Processing...",
-        error: "Error occurred, please refresh",
+        error: (err) => `${err.message}`,
         success: "Success!",
       });
     }

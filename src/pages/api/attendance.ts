@@ -9,15 +9,16 @@ export default async function handler(
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { userId, accessToken, sessionId, xToken } = req.query;  
+  const { userId, accessToken, sessionId, xToken } = req.query;
 
   if (!userId || !accessToken || !sessionId || !xToken) {
-    return res.status(400).json({ message: "Missing required parameters" });
+    return res.status(400).json({ message: "Bad Request!" });
   }
 
   try {
     const response = await axios.get(
-      `${process.env.URL}/api/SubjectAttendance/GetPresentAbsentStudent`, {
+      `${process.env.URL}/api/SubjectAttendance/GetPresentAbsentStudent`,
+      {
         params: {
           isDateWise: false,
           termId: 0,
@@ -38,8 +39,12 @@ export default async function handler(
     );
 
     res.status(200).json(response.data);
-  } catch (error) {
-    console.error("Error fetching attendance data:", error);
+  } catch (error: any) {
+    console.error("Error during API call:", error);
+
+    if (error.code === "ENOTFOUND" || error.code === "ECONNREFUSED") {
+      return res.status(503).json({ message: "No internet connection." });
+    }
     res.status(500).json({ message: "Internal Server Error" });
   }
 }

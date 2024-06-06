@@ -84,8 +84,7 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
     }
   }, [student]);
 
-  const AttendanceData = async () => {
-    if (!data["X-UserId"]) return;
+  const AttendanceData = async (): Promise<void> => {
     setLoading(true);
     try {
       const response = await axios.get("/api/attendance", {
@@ -109,10 +108,20 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
           response.data.attendanceData.concat(response.data.extraLectures)
         );
       } else {
-        toast.error("Failed to fetch attendance");
+        return Promise.reject(new Error("Failed to fetch attendance"));
       }
-    } catch (error) {
-      toast.error("Server not responding...");
+    } catch (error: any) {
+      if (error.response) {
+        return Promise.reject(
+          new Error(
+            error.response.data.message || "Error fetching attendance data"
+          )
+        );
+      } else if (error.request) {
+        return Promise.reject(new Error("No Internet Connection"));
+      } else {
+        return Promise.reject(new Error(error.message));
+      }
     } finally {
       setLoading(false);
     }

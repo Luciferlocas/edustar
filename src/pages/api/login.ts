@@ -33,10 +33,15 @@ export default async function handler(
     } else {
       return res.status(400).json({ message: "Invalid response from server" });
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error during API call:", error);
+
+    if (error.code === "ENOTFOUND" || error.code === "ECONNREFUSED") {
+      return res.status(503).json({ message: "No internet connection." });
+    }
+
     return res.status(500).json({
-      message: "Login failed. Please check your credentials and try again.",
+      message: "Please check your credentials and try again.",
     });
   }
 }

@@ -52,12 +52,10 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setData(response.data);
         router.push("/attendance");
       } else {
-        toast.error(
-          "Login failed. Please check your credentials and try again."
-        );
+        toast.error("Please check your credentials and try again.");
       }
-    } catch (error) {
-      toast.error("Login failed. Please check your credentials and try again.");
+    } catch (error: any) {
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }
