@@ -15,6 +15,7 @@ import {
   ScriptableContext,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { useWindowSize } from "rooks";
 
 ChartJS.register(
   CategoryScale,
@@ -34,7 +35,7 @@ interface AttendanceRecord {
 }
 
 const LineChart: React.FC = () => {
-  const a = window.screen.width;
+  const { innerWidth } = useWindowSize();
   const { graphData } = useAttendance();
   const last10Data = graphData.slice(-10);
 
@@ -64,8 +65,8 @@ const LineChart: React.FC = () => {
           gradient.addColorStop(1, "transparent");
           return gradient;
         },
-        pointRadius: a > 786 ? 4 : 2,
-        pointHoverRadius: a > 786 ? 8 : 4,
+        pointRadius: (innerWidth || 1536) > 786 ? 4 : 2,
+        pointHoverRadius: (innerWidth || 1536) > 786 ? 8 : 4,
         pointBorderWidth: 1,
         pointBackgroundColor: "blue",
       },
@@ -87,7 +88,7 @@ const LineChart: React.FC = () => {
         },
         ticks: {
           font: {
-            size: a > 786 ? 12 : 8,
+            size: (innerWidth || 1536) > 786 ? 12 : 8,
           },
         },
       },
@@ -98,7 +99,7 @@ const LineChart: React.FC = () => {
         },
         ticks: {
           font: {
-            size: a > 786 ? 12 : 8,
+            size: (innerWidth || 1536) > 786 ? 12 : 8,
           },
         },
         beginAtZero: true,

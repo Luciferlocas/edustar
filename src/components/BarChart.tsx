@@ -13,6 +13,7 @@ import {
   ScriptableContext,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { useWindowSize } from "rooks";
 
 ChartJS.register(
   CategoryScale,
@@ -24,8 +25,8 @@ ChartJS.register(
 );
 
 const BarChart: React.FC = () => {
+  const { innerWidth } = useWindowSize();  
   const { aggregatedData } = useAttendance();
-  const a = window.screen.width;
   const dates = Object.keys(aggregatedData).slice(-10);
   const absentCounts = dates.map((date) => aggregatedData[date].totalAbsent);
   const presentCounts = dates.map((date) => aggregatedData[date].totalPresent);
@@ -81,7 +82,7 @@ const BarChart: React.FC = () => {
         },
         ticks: {
           font: {
-            size: a > 786 ? 12 : 8,
+            size: (innerWidth || 1536) > 786 ? 12 : 8,
           },
         },
       },
@@ -93,7 +94,7 @@ const BarChart: React.FC = () => {
         },
         ticks: {
           font: {
-            size: a > 786 ? 12 : 8,
+            size: (innerWidth || 1536) > 786 ? 12 : 8,
           },
         },
         beginAtZero: true,

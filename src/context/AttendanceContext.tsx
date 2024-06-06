@@ -138,7 +138,7 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
         toast.error("Failed to fetch PDP data");
       }
     } catch (error) {
-      toast.error("Server not responding...");
+      toast.error("No Internet Connection");
     } finally {
       setLoading(false);
     }
