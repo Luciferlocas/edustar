@@ -34,7 +34,7 @@ interface AttendanceRecord {
 }
 
 const LineChart: React.FC = () => {
-  const a = screen.width;
+  const a = window.screen.width;
   const { graphData } = useAttendance();
   const last10Data = graphData.slice(-10);
 

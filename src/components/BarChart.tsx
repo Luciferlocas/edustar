@@ -25,7 +25,7 @@ ChartJS.register(
 
 const BarChart: React.FC = () => {
   const { aggregatedData } = useAttendance();
-  const a = screen.width;
+  const a = window.screen.width;
   const dates = Object.keys(aggregatedData).slice(-10);
   const absentCounts = dates.map((date) => aggregatedData[date].totalAbsent);
   const presentCounts = dates.map((date) => aggregatedData[date].totalPresent);
