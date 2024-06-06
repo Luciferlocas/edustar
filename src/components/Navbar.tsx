@@ -64,7 +64,6 @@ const Navmenu = () => {
                 radius="md"
                 as="button"
                 className="transition-transform min-w-10"
-                color="secondary"
                 name="Jason Hughes"
                 src="https://images.pexels.com/photos/3512506/pexels-photo-3512506.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
               />

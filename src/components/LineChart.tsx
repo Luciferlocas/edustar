@@ -34,6 +34,7 @@ interface AttendanceRecord {
 }
 
 const LineChart: React.FC = () => {
+  const a = screen.width;
   const { graphData } = useAttendance();
   const last10Data = graphData.slice(-10);
 
@@ -63,8 +64,8 @@ const LineChart: React.FC = () => {
           gradient.addColorStop(1, "transparent");
           return gradient;
         },
-        pointRadius: 4,
-        pointHoverRadius: 8,
+        pointRadius: a > 786 ? 4 : 2,
+        pointHoverRadius: a > 786 ? 8 : 4,
         pointBorderWidth: 1,
         pointBackgroundColor: "blue",
       },
@@ -84,11 +85,21 @@ const LineChart: React.FC = () => {
           display: true,
           text: "---Date---",
         },
+        ticks: {
+          font: {
+            size: a > 786 ? 12 : 8,
+          },
+        },
       },
       y: {
         title: {
           display: true,
           text: "---Attendance Percentage---",
+        },
+        ticks: {
+          font: {
+            size: a > 786 ? 12 : 8,
+          },
         },
         beginAtZero: true,
         max: 100,

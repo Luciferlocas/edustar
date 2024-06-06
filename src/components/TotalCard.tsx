@@ -43,7 +43,7 @@ const TotalCard = (props: Props) => {
         </Skeleton>
       </CardBody>
       <Image
-        className="-z-0 w-full h-full"
+        className="-z-0"
         height={320}
         width={1000}
         alt="background"

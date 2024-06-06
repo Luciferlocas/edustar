@@ -23,15 +23,9 @@ ChartJS.register(
   Legend
 );
 
-interface AggregatedRecord {
-  absentDate: string;
-  totalAbsent: number;
-  totalPresent: number;
-}
-
 const BarChart: React.FC = () => {
   const { aggregatedData } = useAttendance();
-
+  const a = screen.width;
   const dates = Object.keys(aggregatedData).slice(-10);
   const absentCounts = dates.map((date) => aggregatedData[date].totalAbsent);
   const presentCounts = dates.map((date) => aggregatedData[date].totalPresent);
@@ -85,12 +79,22 @@ const BarChart: React.FC = () => {
           display: true,
           text: "---Date---",
         },
+        ticks: {
+          font: {
+            size: a > 786 ? 12 : 8,
+          },
+        },
       },
       y: {
         stacked: false,
         title: {
           display: true,
           text: "---Attendance Count---",
+        },
+        ticks: {
+          font: {
+            size: a > 786 ? 12 : 8,
+          },
         },
         beginAtZero: true,
       },
