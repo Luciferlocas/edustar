@@ -9,19 +9,18 @@ export default async function handler(
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { studentId, userId, accessToken, sessionId, xToken } = req.query;
+  const { userId, accessToken, sessionId, xToken } = req.query;
 
-  if (!studentId || !userId || !accessToken || !sessionId || !xToken) {
+  if (!userId || !accessToken || !sessionId || !xToken) {
     return res.status(400).json({ message: "Missing required parameters" });
   }
 
   try {
     const response = await axios.get(
-      `${process.env.URL}/api/TransportAttendanceReport`,
+      `${process.env.URL}/api/User/GetByUserId/1`,
       {
         params: {
-          admissionNumber: studentId,
-          type: 7,
+          y: 0,
         },
         headers: {
           Cookie: `_ga_P21KD3ESV2=GS1.1.1717220027.3.0.1717220027.0.0.0; _ga=GA1.2.257840654.1716482344; _gid=GA1.2.287587932.1716482344`,

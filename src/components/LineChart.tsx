@@ -85,6 +85,9 @@ const LineChart: React.FC = () => {
         title: {
           display: true,
           text: "---Date---",
+          font: {
+            size: (innerWidth || 1536) > 786 ? 12 : 8,
+          },
         },
         ticks: {
           font: {
@@ -96,6 +99,9 @@ const LineChart: React.FC = () => {
         title: {
           display: true,
           text: "---Attendance Percentage---",
+          font: {
+            size: (innerWidth || 1536) > 786 ? 12 : 8,
+          },
         },
         ticks: {
           font: {

@@ -12,17 +12,22 @@ import {
   Card,
   Avatar,
   Skeleton,
+  useDisclosure,
+  DropdownSection,
 } from "@nextui-org/react";
 import moment from "moment";
 import { useAttendance } from "@/context/AttendanceContext";
 import { useAuth } from "@/context/AuthContext";
 import { getRandomQuote } from "@/utils/getRandomQuote";
-import { today, getLocalTimeZone } from "@internationalized/date";
+import ProfileModal from "./ProfileModal";
+import { useProfile } from "@/context/ProfileContext";
 
 const Navmenu = () => {
   const { logout } = useAuth();
+  const profileModal = useDisclosure();
   const { profile, loading } = useAttendance();
   const qoute = getRandomQuote();
+  const { UserData } = useProfile();
 
   return (
     <Navbar
@@ -58,7 +63,7 @@ const Navmenu = () => {
           backdrop="blur"
           placement="bottom-end"
         >
-          <DropdownTrigger>
+          <DropdownTrigger onClick={UserData}>
             <Skeleton isLoaded={!loading} className="rounded-xl min-w-10">
               <Avatar
                 radius="md"
@@ -69,24 +74,46 @@ const Navmenu = () => {
               />
             </Skeleton>
           </DropdownTrigger>
-          <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="h-14 gap-2">
-              <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold text-primary-500">
-                {profile.length > 0
-                  ? profile[0].firstName +
-                    " " +
-                    profile[0].middleName +
-                    " " +
-                    profile[0].lastName
-                  : " "}
-              </p>
-            </DropdownItem>
-            <DropdownItem key="logout" color="danger" onClick={logout}>
-              Logout
-            </DropdownItem>
+          <DropdownMenu
+            aria-label="Profile Actions"
+            variant="flat"
+            onAction={(key) => {
+              if (key === "openProfile") {
+                profileModal.onOpen();
+              }
+            }}
+          >
+            <DropdownSection title="" showDivider>
+              <DropdownItem
+                key="openProfile"
+                textValue="Profile"
+                className="h-14 gap-2"
+              >
+                <p className="font-semibold">Signed in as</p>
+                <p className="font-semibold text-primary-500">
+                  {profile.length > 0
+                    ? profile[0].firstName +
+                      " " +
+                      profile[0].middleName +
+                      " " +
+                      profile[0].lastName
+                    : " "}
+                </p>
+              </DropdownItem>
+            </DropdownSection>
+            <DropdownSection key="2" title="">
+              <DropdownItem
+                key="logout"
+                color="danger"
+                textValue="Actions"
+                onClick={logout}
+              >
+                Logout
+              </DropdownItem>
+            </DropdownSection>
           </DropdownMenu>
         </Dropdown>
+        <ProfileModal open={profileModal} />
       </NavbarContent>
     </Navbar>
   );

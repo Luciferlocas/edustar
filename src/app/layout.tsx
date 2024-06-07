@@ -5,6 +5,7 @@ import { Providers } from "./providers";
 import { AuthProvider } from "@/context/AuthContext";
 import Transition from "@/components/Transition";
 import { AttendanceProvider } from "@/context/AttendanceContext";
+import { ProfileProvider } from "@/context/ProfileContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,9 +24,11 @@ export default function RootLayout({
       <body className={`${inter.className}`}>
         <AuthProvider>
           <AttendanceProvider>
-            <Transition>
-              <Providers>{children}</Providers>
-            </Transition>
+            <ProfileProvider>
+              <Transition>
+                <Providers>{children}</Providers>
+              </Transition>
+            </ProfileProvider>
           </AttendanceProvider>
         </AuthProvider>
       </body>

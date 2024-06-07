@@ -79,6 +79,9 @@ const BarChart: React.FC = () => {
         title: {
           display: true,
           text: "---Date---",
+          font: {
+            size: (innerWidth || 1536) > 786 ? 12 : 8,
+          },
         },
         ticks: {
           font: {
@@ -91,6 +94,9 @@ const BarChart: React.FC = () => {
         title: {
           display: true,
           text: "---Attendance Count---",
+          font: {
+            size: (innerWidth || 1536) > 786 ? 12 : 8,
+          },
         },
         ticks: {
           font: {

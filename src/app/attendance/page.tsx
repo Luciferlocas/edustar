@@ -12,7 +12,6 @@ import GraphCard from "@/components/Graph";
 import { motion } from "framer-motion";
 import TotalCard from "@/components/TotalCard";
 
-
 const Dashboard = () => {
   const { data } = useAuth();
   const { loading, AttendanceData, attendance, particular, pdp } =
@@ -85,6 +84,28 @@ const Dashboard = () => {
                 name="PDP Attendance"
               />
             </motion.div>
+            <ScrollShadow
+              orientation="horizontal"
+              hideScrollBar
+              className="flex md:flex-col md:hidden flex-row gap-4 md:h-[calc(100vh-7rem)] h-40 min-w-[20rem]"
+            >
+              {cardsToRender.map((e: any, i: number) => (
+                <motion.div
+                  key={i}
+                  initial="hidden"
+                  animate="visible"
+                  variants={cardVariants}
+                  transition={{ duration: 0.5, delay: i * 0.5 }}
+                >
+                  <SubjectCard
+                    loading={loading}
+                    name={e.name}
+                    total={e.totalLeactures}
+                    present={e.presentLeactures}
+                  />
+                </motion.div>
+              ))}
+            </ScrollShadow>
           </div>
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
@@ -99,7 +120,7 @@ const Dashboard = () => {
         <ScrollShadow
           orientation="horizontal"
           hideScrollBar
-          className="flex md:flex-col flex-row gap-4 md:h-[calc(100vh-7rem)] h-40 min-w-[20rem]"
+          className="md:flex hidden md:flex-col flex-row gap-4 md:h-[calc(100vh-7rem)] h-40 min-w-[20rem]"
         >
           {cardsToRender.map((e: any, i: number) => (
             <motion.div
