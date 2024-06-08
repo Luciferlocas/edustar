@@ -35,9 +35,9 @@ const Navmenu = () => {
       height={32}
       isBlurred
       classNames={{
-        wrapper: "px-0",
+        wrapper: "px-0 py-0",
       }}
-      className="bg-black z-50"
+      className="bg-black z-[9999] h-[4rem]"
     >
       <NavbarContent as="div" className="items-center">
         <Input

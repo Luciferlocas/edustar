@@ -27,7 +27,7 @@ const TotalCard = (props: Props) => {
     <Card
       isPressable
       isFooterBlurred
-      className="bg-black border-[0.5px] border-zinc-600 h-60 hover:border-white w-full"
+      className="bg-black border-[0.5px] border-zinc-600 h-60 hover:border-white w-full z-0"
     >
       <CardHeader className="absolute z-10 top-1 font-bold text-2xl text-left">
         <Skeleton isLoaded={!props.loading} className="rounded-md">
