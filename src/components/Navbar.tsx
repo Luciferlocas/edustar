@@ -33,10 +33,11 @@ const Navmenu = () => {
     <Navbar
       maxWidth="full"
       height={32}
+      isBlurred
       classNames={{
         wrapper: "px-0",
       }}
-      className="bg-black"
+      className="bg-black z-50"
     >
       <NavbarContent as="div" className="items-center">
         <Input

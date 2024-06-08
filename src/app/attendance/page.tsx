@@ -53,7 +53,7 @@ const Dashboard = () => {
         <ScrollShadow
           orientation="vertical"
           hideScrollBar
-          className="flex flex-col gap-4 w-full md:min-h-[calc(100vh-7rem)] h-full min-w-[20rem]"
+          className="flex flex-col gap-4 w-full md:h-[calc(100vh-7rem)] h-full min-w-[20rem]"
         >
           <div className="flex lg:flex-row flex-col gap-4">
             <motion.div
