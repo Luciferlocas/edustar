@@ -55,6 +55,7 @@ const TotalCard = (props: Props) => {
           <Progress
             size="sm"
             radius="sm"
+            formatOptions={{style: "unit", unit: "percent"}}
             classNames={{
               base: "w-60",
               track: "drop-shadow-md",

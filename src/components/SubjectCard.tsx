@@ -50,6 +50,7 @@ const Subjectcard = (props: Props) => {
           <Progress
             size="sm"
             radius="sm"
+            formatOptions={{style: "unit", unit: "percent"}}
             classNames={{
               base: "max-w-48",
               track: "drop-shadow-md",
