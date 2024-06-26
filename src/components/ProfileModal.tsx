@@ -33,7 +33,7 @@ export default function ProfileModal({ open }: { open: UseDisclosureReturn }) {
               <ModalBody className="flex flex-col">
                 <div className="flex gap-6 items-end">
                   <img
-                    src={`https://boond.vercel.app/api/photo/${blob}`}
+                    src={`/api/photo?photoId=${blob}`}
                     className="bg-white w-20 aspect-square rounded-full"
                     alt=""
                   />

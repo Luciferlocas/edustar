@@ -22,10 +22,10 @@ export default async function handler(
         headers: {
           Cookie: `_ga_P21KD3ESV2=GS1.1.1717220027.3.0.1717220027.0.0.0; _ga=GA1.2.257840654.1716482344; _gid=GA1.2.287587932.1716482344`,
         },
+        responseType: "arraybuffer",
       }
     );
-
-    res.status(200).json(response.data);
+    res.send(response.data);
   } catch (error: any) {
     console.error("Error during API call:", error);
 
