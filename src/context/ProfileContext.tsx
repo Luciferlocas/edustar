@@ -14,6 +14,7 @@ interface ProfileContextType {
   loading: boolean;
   UserData: () => Promise<void>;
   userProfile: any;
+  blob: number;
 }
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
@@ -26,6 +27,7 @@ const ProfileProvider: React.FC<AttendanceProviderProps> = ({ children }) => {
   const { data } = useAuth();
   const [loading, setLoading] = useState(false);
   const [userProfile, setUserProfile] = useState([]);
+  const [blob, setBlob] = useState<number>(0);
 
   const UserData = async (): Promise<void> => {
     setLoading(true);
@@ -41,6 +43,7 @@ const ProfileProvider: React.FC<AttendanceProviderProps> = ({ children }) => {
 
       if (response.status === 200) {
         setUserProfile(response.data);
+        setBlob(response.data.profilePictureId);
       } else {
         return Promise.reject(new Error("Failed to fetch attendance"));
       }
@@ -67,6 +70,7 @@ const ProfileProvider: React.FC<AttendanceProviderProps> = ({ children }) => {
         loading,
         UserData,
         userProfile,
+        blob
       }}
     >
       {children}

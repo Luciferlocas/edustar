@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Navbar,
   NavbarContent,
@@ -28,6 +28,18 @@ const Navmenu = () => {
   const { profile, loading } = useAttendance();
   const qoute = getRandomQuote();
   const { UserData } = useProfile();
+  const [time, setTime] = useState(
+    moment(new Date()).format("DD MMM YYYY  h:mm A")
+  );
+  const [once, setOnce] = useState(true);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(moment(new Date()).format("DD MMM YYYY  h:mm A"));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <Navbar
@@ -55,7 +67,7 @@ const Navmenu = () => {
           className="sm:grid place-content-center bg-gradient-to-br from-60% from-black via-zinc-800 to-black border-[0.5px] border-zinc-600 lg:col-span-3 col-span-8 text-center text-sm shadow-none h-10 md:min-w-80 min-w-40 hidden"
           radius="md"
         >
-          {moment(new Date()).format("DD MMM YYYY  h:mm A")}
+          {time}
         </Card>
         <Dropdown
           classNames={{
@@ -64,7 +76,14 @@ const Navmenu = () => {
           backdrop="blur"
           placement="bottom-end"
         >
-          <DropdownTrigger onClick={UserData}>
+          <DropdownTrigger
+            onClick={() => {
+              if (once) {
+                UserData();
+                setOnce(false);
+              }
+            }}
+          >
             <Skeleton isLoaded={!loading} className="rounded-xl min-w-10">
               <Avatar
                 radius="md"

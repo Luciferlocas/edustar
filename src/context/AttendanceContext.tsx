@@ -68,10 +68,7 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
   const [pdp, setPdp] = useState<pdpData[]>([]);
   const [everyday, setEveryday] = useState([]);
   const aggregatedData: AggregatedRecordData = {};
-  const attendanceBySubject: AttendanceBySubject = {};
-
-  console.log(pdp);
-  
+  const attendanceBySubject: AttendanceBySubject = {};    
 
   everyday.forEach((item: any) => {
     const { isAbsent, absentDate } = item;

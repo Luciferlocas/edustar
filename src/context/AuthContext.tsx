@@ -15,8 +15,24 @@ import Cookies from "js-cookie";
 interface AuthContextType {
   loading: boolean;
   login: (username: string, password: string) => Promise<void>;
-  data: any;
+  data: dataType;
   logout: () => void;
+}
+
+interface dataType {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+  "X-ContextId": string;
+  "X-UserId": string;
+  "X-LogoId": string;
+  "X-RX": string;
+  PChangeSetting: string;
+  PChangeStatus: string;
+  SessionId: string;
+  X_Token: string;
+  ".issued": string;
+  ".expires": string;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -33,7 +49,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const res = Cookies.get("user");
     if (res) {
-      setData(JSON.parse(res));
+      setData(JSON.parse(atob(res)));
       router.push("/attendance");
     }
   }, []);
@@ -44,7 +60,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const response = await axios.post("/api/login", { username, password });
 
       if (response.status === 200) {
-        Cookies.set("user", JSON.stringify(response.data), {
+        const encoded = btoa(JSON.stringify(response.data));
+        Cookies.set("user", encoded, {
           expires: 331,
           sameSite: "Strict",
           secure: true,

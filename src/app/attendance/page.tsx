@@ -20,7 +20,6 @@ const Dashboard = () => {
     attendance,
     particular,
     pdp,
-    attendanceBySubject,
   } = useAttendance();
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const cardsToRender =
