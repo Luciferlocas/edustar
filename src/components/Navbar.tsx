@@ -27,11 +27,10 @@ const Navmenu = () => {
   const profileModal = useDisclosure();
   const { profile, loading } = useAttendance();
   const qoute = getRandomQuote();
-  const { UserData } = useProfile();
+  const { blob, userProfile } = useProfile();
   const [time, setTime] = useState(
     moment(new Date()).format("DD MMM YYYY  h:mm A")
   );
-  const [once, setOnce] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -76,21 +75,18 @@ const Navmenu = () => {
           backdrop="blur"
           placement="bottom-end"
         >
-          <DropdownTrigger
-            onClick={() => {
-              if (once) {
-                UserData();
-                setOnce(false);
-              }
-            }}
-          >
+          <DropdownTrigger>
             <Skeleton isLoaded={!loading} className="rounded-xl min-w-10">
               <Avatar
                 radius="md"
                 as="button"
                 className="transition-transform min-w-10"
-                name="Jason Hughes"
-                src="https://images.pexels.com/photos/3512506/pexels-photo-3512506.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                name={userProfile.firstName}
+                src={
+                  blob !== 0
+                    ? `/api/photo?photoId=${blob}`
+                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXA-Uu5DzOUC3DEEh789elx46nvfe-0s-7xg&usqp=CAU"
+                }
               />
             </Skeleton>
           </DropdownTrigger>

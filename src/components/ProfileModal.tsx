@@ -4,9 +4,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
-  Button,
-  Avatar,
+  Skeleton,
   Divider,
 } from "@nextui-org/react";
 import type { UseDisclosureReturn } from "@nextui-org/use-disclosure";
@@ -14,7 +12,7 @@ import { useProfile } from "@/context/ProfileContext";
 
 export default function ProfileModal({ open }: { open: UseDisclosureReturn }) {
   const { isOpen, onOpenChange } = open;
-  const { userProfile, blob } = useProfile();
+  const { userProfile, blob, loading } = useProfile();
 
   return (
     <>
@@ -32,11 +30,17 @@ export default function ProfileModal({ open }: { open: UseDisclosureReturn }) {
               </ModalHeader>
               <ModalBody className="flex flex-col">
                 <div className="flex gap-6 items-end">
-                  <img
-                    src={`/api/photo?photoId=${blob}`}
-                    className="bg-white w-20 aspect-square rounded-full"
-                    alt=""
-                  />
+                  <Skeleton isLoaded={!loading} className="w-20 aspect-square rounded-full">
+                    <img
+                      src={
+                        blob !== 0
+                          ? `/api/photo?photoId=${blob}`
+                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXA-Uu5DzOUC3DEEh789elx46nvfe-0s-7xg&usqp=CAU"
+                      }
+                      className="w-20 aspect-square rounded-full object-cover object-top"
+                      alt=""
+                    />
+                  </Skeleton>
                   <div className="flex flex-col">
                     <p className="text-primary-400 font-bold text-lg">
                       {userProfile.firstName +

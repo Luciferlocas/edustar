@@ -12,7 +12,6 @@ import { useAuth } from "./AuthContext";
 
 interface ProfileContextType {
   loading: boolean;
-  UserData: () => Promise<void>;
   userProfile: any;
   blob: number;
 }
@@ -28,6 +27,10 @@ const ProfileProvider: React.FC<AttendanceProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [userProfile, setUserProfile] = useState([]);
   const [blob, setBlob] = useState<number>(0);
+
+  useEffect(() => {
+    if (data) UserData();
+  }, [data]);
 
   const UserData = async (): Promise<void> => {
     setLoading(true);
@@ -68,9 +71,8 @@ const ProfileProvider: React.FC<AttendanceProviderProps> = ({ children }) => {
     <ProfileContext.Provider
       value={{
         loading,
-        UserData,
         userProfile,
-        blob
+        blob,
       }}
     >
       {children}
