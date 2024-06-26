@@ -38,6 +38,7 @@ const LineChart: React.FC = () => {
   const { innerWidth } = useWindowSize();
   const { graphData } = useAttendance();
   const last10Data = graphData.slice(-10);
+  
 
   const labels = last10Data.map((record: AttendanceRecord) =>
     moment(record.absentDate).format("DD-MMM")

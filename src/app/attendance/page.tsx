@@ -14,8 +14,14 @@ import TotalCard from "@/components/TotalCard";
 
 const Dashboard = () => {
   const { data } = useAuth();
-  const { loading, AttendanceData, attendance, particular, pdp } =
-    useAttendance();
+  const {
+    loading,
+    AttendanceData,
+    attendance,
+    particular,
+    pdp,
+    attendanceBySubject,
+  } = useAttendance();
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const cardsToRender =
     particular.length > 0 ? particular : new Array(10).fill(0);
@@ -64,6 +70,7 @@ const Dashboard = () => {
               className="w-full z-50"
             >
               <TotalCard
+                percent={total.overallPercentage}
                 loading={loading}
                 total={total.overallLecture}
                 present={total.overallPresent}
@@ -78,6 +85,7 @@ const Dashboard = () => {
               className="w-full"
             >
               <TotalCard
+                percent={((pdp.length - pdpTrue || 0) * 100) / pdp.length}
                 loading={loading}
                 total={pdp.length}
                 present={pdp.length - pdpTrue}
@@ -98,6 +106,8 @@ const Dashboard = () => {
                   transition={{ duration: 0.5, delay: i * 0.5 }}
                 >
                   <SubjectCard
+                    subjectId={e.id}
+                    percent={e.percentageAttendance}
                     loading={loading}
                     name={e.name}
                     total={e.totalLeactures}
@@ -131,6 +141,8 @@ const Dashboard = () => {
               transition={{ duration: 0.5, delay: i * 0.5 }}
             >
               <SubjectCard
+                subjectId={e.id}
+                percent={e.percentageAttendance}
                 loading={loading}
                 name={e.name}
                 total={e.totalLeactures}

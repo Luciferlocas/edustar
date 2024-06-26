@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 
 interface Props {
+  percent: number;
   loading: boolean;
   total: number;
   present: number;
@@ -18,7 +19,7 @@ interface Props {
 }
 
 const TotalCard = (props: Props) => {
-  const perc = ((props.present || 0) * 100) / props.total || 0;
+  const perc = props.percent || 0;
   const danger = perc <= 50;
   const warn = perc < 75 && perc > 50;
   const primary = perc >= 75;
@@ -55,7 +56,7 @@ const TotalCard = (props: Props) => {
           <Progress
             size="sm"
             radius="sm"
-            formatOptions={{style: "unit", unit: "percent"}}
+            formatOptions={{ style: "unit", unit: "percent" }}
             classNames={{
               base: "w-60",
               track: "drop-shadow-md",

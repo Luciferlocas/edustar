@@ -19,8 +19,27 @@ interface AttendanceContextType {
   particular: any;
   student: number;
   pdp: any;
-  graphData: any;
-  aggregatedData: any;
+  graphData: AggregatedRecord[];
+  aggregatedData: AggregatedRecordData;
+  attendanceBySubject: AttendanceBySubject;
+}
+
+interface AttendanceBySubject {
+  [subjectId: number]: AttendanceEntry[];
+}
+
+interface AggregatedRecordData {
+  [key: string]: AggregatedRecord;
+}
+
+interface pdpData{
+  [key: number]: any;
+}
+
+interface AttendanceEntry {
+  date: string;
+  P: number;
+  A: number;
 }
 
 interface AggregatedRecord {
@@ -41,14 +60,18 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
   children,
 }) => {
   const { data } = useAuth();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [attendance, setAttendance] = useState([]);
   const [profile, setProfile] = useState([]);
   const [particular, setParticular] = useState([]);
   const [student, setStudent] = useState<number>(0);
-  const [pdp, setPdp] = useState([]);
+  const [pdp, setPdp] = useState<pdpData[]>([]);
   const [everyday, setEveryday] = useState([]);
-  const aggregatedData: { [key: string]: AggregatedRecord } = {};
+  const aggregatedData: AggregatedRecordData = {};
+  const attendanceBySubject: AttendanceBySubject = {};
+
+  console.log(pdp);
+  
 
   everyday.forEach((item: any) => {
     const { isAbsent, absentDate } = item;
@@ -62,6 +85,30 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
     if (isAbsent) aggregatedData[absentDate].totalAbsent += 1;
     else aggregatedData[absentDate].totalPresent += 1;
   });
+
+  everyday.forEach(
+    (record: { subjectId: number; absentDate: string; isAbsent: boolean }) => {
+      const { subjectId, absentDate, isAbsent } = record;
+      if (!attendanceBySubject[subjectId]) {
+        attendanceBySubject[subjectId] = [];
+      }
+
+      let entry = attendanceBySubject[subjectId].find(
+        (entry) => entry.date === absentDate
+      );
+
+      if (!entry) {
+        entry = { date: absentDate, P: 0, A: 0 };
+        attendanceBySubject[subjectId].push(entry);
+      }
+
+      if (isAbsent) {
+        entry.A++;
+      } else {
+        entry.P++;
+      }
+    }
+  );
 
   let pAbsent = 0;
   let pPresnt = 0;
@@ -165,6 +212,7 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
         pdp,
         graphData,
         aggregatedData,
+        attendanceBySubject,
       }}
     >
       {children}

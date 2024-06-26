@@ -10,7 +10,7 @@ import {
 import type { UseDisclosureReturn } from "@nextui-org/use-disclosure";
 import { useProfile } from "@/context/ProfileContext";
 
-export default function ExampleModal({ open }: { open: UseDisclosureReturn }) {
+export default function ProfileModal({ open }: { open: UseDisclosureReturn }) {
   const { isOpen, onOpenChange } = open;
   const { userProfile } = useProfile();
 

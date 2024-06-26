@@ -65,6 +65,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     Cookies.remove("user");
     toast.error("Login again!");
     router.push("/");
+    window.location.reload();
   };
 
   return (

@@ -5,26 +5,34 @@ import {
   CardHeader,
   Skeleton,
   Progress,
+  useDisclosure,
 } from "@nextui-org/react";
 import React from "react";
 import bg from "../../public/bg.jpg";
 import Image from "next/image";
+import AttendanceModal from "../components/AttendanceModal";
+import { useAttendance } from "@/context/AttendanceContext";
 
 interface Props {
+  subjectId: number;
   loading: boolean;
   name: string;
   total: number;
   present: number;
+  percent: number;
 }
 
 const Subjectcard = (props: Props) => {
-  const perc = ((props.present || 0) * 100) / props.total || 0;
+  const { attendanceBySubject } = useAttendance();
+  const perc = props.percent || 0;
   const danger = perc <= 50;
   const warn = perc < 75 && perc > 50;
   const primary = perc >= 75;
-  
+  const attendanceModal = useDisclosure();
+
   return (
     <Card
+      onClick={() => attendanceModal.onOpen()}
       isFooterBlurred
       isPressable
       className="bg-black border-[0.5px] border-zinc-600 min-w-80 h-40 hover:border-white"
@@ -50,7 +58,7 @@ const Subjectcard = (props: Props) => {
           <Progress
             size="sm"
             radius="sm"
-            formatOptions={{style: "unit", unit: "percent"}}
+            formatOptions={{ style: "unit", unit: "percent" }}
             classNames={{
               base: "max-w-48",
               track: "drop-shadow-md",
@@ -71,6 +79,7 @@ const Subjectcard = (props: Props) => {
           Attendance - {props.present || 0} / {props.total || 0}
         </Skeleton>
       </CardFooter>
+      <AttendanceModal open={attendanceModal} name={props.name} data={attendanceBySubject[props.subjectId]}/>
     </Card>
   );
 };
