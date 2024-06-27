@@ -9,11 +9,17 @@ import React, {
 } from "react";
 import axios from "axios";
 import { useAuth } from "./AuthContext";
+import toast from "react-hot-toast";
 
 interface ProfileContextType {
   loading: boolean;
   userProfile: any;
   blob: number;
+  changePassword: (
+    oldp: string,
+    newp: string,
+    confirmp: string
+  ) => Promise<void>;
 }
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
@@ -67,12 +73,51 @@ const ProfileProvider: React.FC<AttendanceProviderProps> = ({ children }) => {
     }
   };
 
+  const changePassword = async (
+    oldp: string,
+    newp: string,
+    confirmp: string
+  ) => {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "/api/changePassword",
+        { oldPassword: oldp, newPassword: newp, repeatNewPassword: confirmp },
+        {
+          params: {
+            userId: data["X-UserId"],
+            accessToken: data.access_token,
+            sessionId: data.SessionId,
+            xToken: data.X_Token,
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        toast.success("Password changed successfully.");
+      }
+    } catch (error: any) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <ProfileContext.Provider
       value={{
         loading,
         userProfile,
         blob,
+        changePassword,
       }}
     >
       {children}

@@ -1,4 +1,3 @@
-// utils/getRandomQuote.ts
 interface Quote {
   text: string;
 }

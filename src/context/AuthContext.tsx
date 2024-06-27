@@ -82,6 +82,19 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     Cookies.remove("user");
     toast.error("Login again!");
     router.push("/");
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      });
+    }
+
+    caches.keys().then((names) => {
+      for (let name of names) {
+        caches.delete(name);
+      }
+    });
     window.location.reload();
   };
 

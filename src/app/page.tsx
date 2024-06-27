@@ -65,7 +65,7 @@ export default function Home() {
               placeholder="Enter your password"
             />
             <Button
-              className="w-full"
+              className="w-full mt-8 font-bold"
               variant="flat"
               color="primary"
               type="submit"
@@ -73,12 +73,6 @@ export default function Home() {
             >
               Sign in
             </Button>
-            <p className="text-right sm:text-sm text-xs mt-[1em]">
-              Forgot password?{" "}
-              <Link href="" className="text-rose-600 underline">
-                Click Here
-              </Link>
-            </p>
           </form>
         </div>
       </div>

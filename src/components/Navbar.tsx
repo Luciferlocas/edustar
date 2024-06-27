@@ -20,14 +20,16 @@ import { useAttendance } from "@/context/AttendanceContext";
 import { useAuth } from "@/context/AuthContext";
 import { getRandomQuote } from "@/utils/getRandomQuote";
 import ProfileModal from "./ProfileModal";
+import PasswordModal from "./ChangePass";
 import { useProfile } from "@/context/ProfileContext";
 
 const Navmenu = () => {
   const { logout } = useAuth();
   const profileModal = useDisclosure();
+  const passModal = useDisclosure();
   const { profile, loading } = useAttendance();
   const qoute = getRandomQuote();
-  const { blob, userProfile } = useProfile();
+  const { blob, userProfile, changePassword } = useProfile();
   const [time, setTime] = useState(
     moment(new Date()).format("DD MMM YYYY  h:mm A")
   );
@@ -96,6 +98,8 @@ const Navmenu = () => {
             onAction={(key) => {
               if (key === "openProfile") {
                 profileModal.onOpen();
+              } else if (key === "passwordchange") {
+                passModal.onOpen();
               }
             }}
           >
@@ -119,6 +123,13 @@ const Navmenu = () => {
             </DropdownSection>
             <DropdownSection key="2" title="">
               <DropdownItem
+                key="passwordchange"
+                color="warning"
+                textValue="Password"
+              >
+                Change Password
+              </DropdownItem>
+              <DropdownItem
                 key="logout"
                 color="danger"
                 textValue="Actions"
@@ -130,6 +141,7 @@ const Navmenu = () => {
           </DropdownMenu>
         </Dropdown>
         <ProfileModal open={profileModal} />
+        <PasswordModal open={passModal} />
       </NavbarContent>
     </Navbar>
   );
