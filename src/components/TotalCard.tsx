@@ -7,8 +7,10 @@ import {
   CardBody,
   CardFooter,
   Progress,
+  useDisclosure,
 } from "@nextui-org/react";
 import Image from "next/image";
+import PdpModal from "./PdpModal";
 
 interface Props {
   percent: number;
@@ -23,10 +25,14 @@ const TotalCard = (props: Props) => {
   const danger = perc <= 50;
   const warn = perc < 75 && perc > 50;
   const primary = perc >= 75;
+  const pdpModal = useDisclosure();
 
   return (
     <Card
-      isPressable
+      onClick={() => {
+        if (props.name === "PDP Attendance") pdpModal.onOpen();
+      }}
+      isPressable={props.name === "PDP Attendance"}
       isFooterBlurred
       className="bg-black border-[0.5px] border-zinc-600 h-60 hover:border-white w-full z-0"
     >
@@ -71,6 +77,7 @@ const TotalCard = (props: Props) => {
             showValueLabel={true}
           />
         </Skeleton>
+        <PdpModal open={pdpModal} />
       </CardFooter>
     </Card>
   );

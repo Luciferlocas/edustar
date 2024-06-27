@@ -29,7 +29,7 @@ const Navmenu = () => {
   const passModal = useDisclosure();
   const { profile, loading } = useAttendance();
   const qoute = getRandomQuote();
-  const { blob, userProfile, changePassword } = useProfile();
+  const { blob, userProfile } = useProfile();
   const [time, setTime] = useState(
     moment(new Date()).format("DD MMM YYYY  h:mm A")
   );

@@ -44,8 +44,6 @@ export default function PasswordModal(prop: Props) {
     onOpenChange();
   };
 
-  console.log(error);
-
   return (
     <>
       <Modal

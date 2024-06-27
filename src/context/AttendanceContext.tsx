@@ -22,6 +22,7 @@ interface AttendanceContextType {
   graphData: AggregatedRecord[];
   aggregatedData: AggregatedRecordData;
   attendanceBySubject: AttendanceBySubject;
+  attendanceMap: Map<string, AttendanceEntry>;
 }
 
 interface AttendanceBySubject {
@@ -32,7 +33,7 @@ interface AggregatedRecordData {
   [key: string]: AggregatedRecord;
 }
 
-interface pdpData{
+interface pdpData {
   [key: number]: any;
 }
 
@@ -68,7 +69,8 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
   const [pdp, setPdp] = useState<pdpData[]>([]);
   const [everyday, setEveryday] = useState([]);
   const aggregatedData: AggregatedRecordData = {};
-  const attendanceBySubject: AttendanceBySubject = {};    
+  const attendanceBySubject: AttendanceBySubject = {};
+  const attendanceMap = new Map<string, AttendanceEntry>();
 
   everyday.forEach((item: any) => {
     const { isAbsent, absentDate } = item;
@@ -106,6 +108,19 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
       }
     }
   );
+
+  pdp.forEach((item: any) => {
+    let date = item.attendanceDate.split("T")[0];
+
+    if (!attendanceMap.has(date)) {
+      attendanceMap.set(date, { date: date, P: 0, A: 0 });
+    }
+    if (item.isInAbsent === false) {
+      attendanceMap.get(date)!.P++;
+    } else {
+      attendanceMap.get(date)!.A++;
+    }
+  });
 
   let pAbsent = 0;
   let pPresnt = 0;
@@ -210,6 +225,7 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
         graphData,
         aggregatedData,
         attendanceBySubject,
+        attendanceMap,
       }}
     >
       {children}
