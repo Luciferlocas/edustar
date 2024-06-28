@@ -121,7 +121,7 @@ const Navmenu = () => {
                 </p>
               </DropdownItem>
             </DropdownSection>
-            <DropdownSection key="2" title="">
+            <DropdownSection key="2" title="" showDivider>
               <DropdownItem
                 key="passwordchange"
                 color="warning"
@@ -136,6 +136,14 @@ const Navmenu = () => {
                 onClick={logout}
               >
                 Logout
+              </DropdownItem>
+            </DropdownSection>
+            <DropdownSection key="3" title="">
+              <DropdownItem key="About" isReadOnly className="text-center">
+                <a href="https://www.linkedin.com/in/rohit-somvanshi/">
+                  Designed & Developed <br /> with 🤍 by{" "}
+                  <span className="font-bold">Rohit</span>
+                </a>
               </DropdownItem>
             </DropdownSection>
           </DropdownMenu>
