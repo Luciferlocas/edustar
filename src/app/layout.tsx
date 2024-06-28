@@ -7,6 +7,7 @@ import Transition from "@/components/Transition";
 import { AttendanceProvider } from "@/context/AttendanceContext";
 import { ProfileProvider } from "@/context/ProfileContext";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.className}`}>
         <SpeedInsights />
+        <Analytics />
         <AuthProvider>
           <AttendanceProvider>
             <ProfileProvider>
