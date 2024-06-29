@@ -8,9 +8,25 @@ const config = {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        trans: {
+          '0%': { transform: "translateY(800px) translateX(300px)" },
+          '100%': { transform: "translateY(-800px) translateX(-10px)" },
+        },
+        trans2: {
+          '0%': { transform: "translateY(-800px) translateX(-100px)" },
+          '100%': { transform: "translateY(800px) translateX(100px)" },
+        },
+      },
+      animation: {
+        trans: "trans 20s linear infinite",
+        trans2: "trans2 20s linear infinite",
+      },
+    },
   },
   darkMode: "class",
   plugins: [nextui()],
 };
+
 export default config;

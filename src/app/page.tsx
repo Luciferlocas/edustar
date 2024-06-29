@@ -21,11 +21,11 @@ export default function Home() {
 
   return (
     <main className="relative w-screen min-h-screen grid place-content-center overflow-hidden bg-black">
-      <div className="z-0 w-[14em] blur-3xl absolute md:top-[8%] -top-[4%] md:left-[10%] -left-[20%] aspect-square bg-primary-300 rounded-full opacity-15"></div>
-      <div className="z-0 w-[15em] blur-3xl absolute md:bottom-[15%] -bottom-[2%] md:right-[15%] -right-[5%] aspect-square bg-primary-300 rounded-full opacity-15"></div>
+      <div className="animate-trans z-0 w-[14em] blur-2xl absolute md:top-[8%] -top-[4%] md:left-[10%] -left-[20%] aspect-square bg-primary-300 rounded-full opacity-15"></div>
+      <div className="animate-trans2 z-0 w-[15em] blur-2xl absolute md:bottom-[15%] -bottom-[2%] md:right-[25%] -right-[5%] aspect-square bg-primary-300 rounded-full opacity-15"></div>
 
       <div className="w-screen min-h-screen z-20 flex justify-center items-center">
-        <div className="absolute hue-rotate-180 opacity-50 sm:scale-100 scale-50 sm:-top-3/4 -top-1/2">
+        <div className="absolute hue-rotate-180 opacity-50 sm:scale-100 scale-125 sm:-top-3/4 -top-1/2">
           <Background />
         </div>
         <div className="dark rounded-xl border-[0.5px] border-primary-700 py-24 sm:w-[25em] w-2/3 backdrop-blur-xl flex flex-col gap-8 text-white">
