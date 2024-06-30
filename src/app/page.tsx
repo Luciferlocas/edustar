@@ -43,7 +43,7 @@ export default function Home() {
               variant="bordered"
               labelPlacement="outside"
               label="Username"
-              placeholder="Enter your username"
+              placeholder="Enter your edumarshal username"
             />
             <Input
               isRequired
