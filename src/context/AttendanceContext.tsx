@@ -178,9 +178,10 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
         );
       } else if (error.request) {
         return Promise.reject(new Error("No Internet Connection"));
-      } else {
-        return Promise.reject(new Error(error.message));
-      }
+      } 
+      // else {
+      //   return Promise.reject(new Error(error.message));
+      // }
     } finally {
       setLoading(false);
     }

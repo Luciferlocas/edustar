@@ -27,7 +27,7 @@ const Navmenu = () => {
   const { logout } = useAuth();
   const profileModal = useDisclosure();
   const passModal = useDisclosure();
-  const { profile, loading } = useAttendance();
+  const { loading } = useAttendance();
   const qoute = getRandomQuote();
   const { blob, userProfile } = useProfile();
   const [time, setTime] = useState(
