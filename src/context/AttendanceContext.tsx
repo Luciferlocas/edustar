@@ -8,7 +8,7 @@ import React, {
   useEffect,
 } from "react";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "sonner";;
 import { useAuth } from "./AuthContext";
 
 interface AttendanceContextType {
@@ -153,7 +153,7 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
           sessionId: data.SessionId,
           xToken: data.X_Token,
         },
-      });
+      });      
 
       if (response.status === 200) {
         setAttendance(response.data);

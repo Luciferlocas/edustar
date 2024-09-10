@@ -111,12 +111,12 @@ const Navmenu = () => {
               >
                 <p className="font-semibold">Signed in as</p>
                 <p className="font-semibold text-primary-500">
-                  {profile.length > 0
-                    ? profile[0].firstName +
+                  {userProfile
+                    ? userProfile.firstName +
                       " " +
-                      profile[0].middleName +
+                      userProfile.middleName +
                       " " +
-                      profile[0].lastName
+                      userProfile.lastName
                     : " "}
                 </p>
               </DropdownItem>

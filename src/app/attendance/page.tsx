@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { useAttendance } from "@/context/AttendanceContext";
 import { useAuth } from "@/context/AuthContext";
@@ -23,7 +23,7 @@ const Dashboard = () => {
   } = useAttendance();
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const cardsToRender =
-    particular.length > 0 ? particular : new Array(10).fill(0);
+    particular?.length > 0 ? particular : new Array(10).fill(0);
   const total = attendance.stdSubAtdDetails || {
     overallLecture: 0,
     overallPresent: 0,

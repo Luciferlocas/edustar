@@ -9,8 +9,8 @@ import React, {
 } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { Toaster, toast } from "react-hot-toast";
 import Cookies from "js-cookie";
+import { toast, Toaster } from "sonner";
 
 interface AuthContextType {
   loading: boolean;
@@ -80,7 +80,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = () => {
     Cookies.remove("user");
-    toast.error("Login again!");
     router.push("/");
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.getRegistrations().then((registrations) => {
@@ -96,35 +95,12 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     });
     window.location.reload();
+    toast.warning("Login again!");
   };
 
   return (
     <AuthContext.Provider value={{ loading, login, logout, data }}>
-      <Toaster
-        position="bottom-right"
-        toastOptions={{
-          style: {
-            border: "1.5px solid #858585",
-            padding: "8px 16px",
-            color: "#b0b0b0",
-            backgroundColor: "black",
-            borderRadius: "4px",
-            fontSize: "14px",
-          },
-          error: {
-            iconTheme: {
-              primary: "#b50404",
-              secondary: "black",
-            },
-          },
-          success: {
-            iconTheme: {
-              primary: "#016ae4",
-              secondary: "black",
-            },
-          },
-        }}
-      />
+      <Toaster position="bottom-right" theme="dark" richColors/>
       {children}
     </AuthContext.Provider>
   );
