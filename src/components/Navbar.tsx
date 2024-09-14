@@ -18,7 +18,7 @@ import {
 import moment from "moment";
 import { useAttendance } from "@/context/AttendanceContext";
 import { useAuth } from "@/context/AuthContext";
-import { getRandomQuote } from "@/utils/getRandomQuote";
+import { getRandomQuote } from "@/lib/utils";
 import ProfileModal from "./ProfileModal";
 import PasswordModal from "./ChangePass";
 import { useProfile } from "@/context/ProfileContext";
@@ -54,7 +54,7 @@ const Navmenu = () => {
     >
       <NavbarContent as="div" className="items-center">
         <Input
-          value={qoute.text}
+          value={!loading ? qoute.text : "Thinking..."}
           radius="md"
           isReadOnly
           className="w-full"

@@ -54,29 +54,27 @@ export default function PdpModal(prop: Props) {
               </CardHeader>
               <CardBody className="flex flex-col gap-2">
                 {pdp.map((item: AttendanceEntry, i: number) => (
-                  <>
-                    <motion.div
-                      initial={{ opacity: 0, y: -20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: i * 0.05 }}
-                      key={i + "subject"}
-                    >
-                      <div className="flex justify-between">
-                        <span>{moment(item.date).format("DD MMM, YYYY")}</span>
-                        <div>
-                          <span className="text-success-400 font-semibold">
-                            {stringOfAT(item.P, "P")}
-                          </span>
-                          <span className="text-danger-400 font-semibold">
-                            {stringOfAT(item.A, "A")}
-                          </span>
-                        </div>
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: i * 0.05 }}
+                    key={i + "subject"}
+                  >
+                    <div className="flex justify-between">
+                      <span>{moment(item.date).format("DD MMM, YYYY")}</span>
+                      <div>
+                        <span className="text-success-400 font-semibold">
+                          {stringOfAT(item.P, "P")}
+                        </span>
+                        <span className="text-danger-400 font-semibold">
+                          {stringOfAT(item.A, "A")}
+                        </span>
                       </div>
-                      <Divider
-                        className={`mt-2 ${pdp.length === i + 1 && "hidden"}`}
-                      />
-                    </motion.div>
-                  </>
+                    </div>
+                    <Divider
+                      className={`mt-2 ${pdp.length === i + 1 && "hidden"}`}
+                    />
+                  </motion.div>
                 ))}
               </CardBody>
             </Card>

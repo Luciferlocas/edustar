@@ -12,6 +12,7 @@ import bg from "../../public/bg.jpg";
 import Image from "next/image";
 import AttendanceModal from "../components/AttendanceModal";
 import { useAttendance } from "@/context/AttendanceContext";
+import { capitalizeTitle } from "@/lib/utils";
 
 interface Props {
   subjectId: number;
@@ -38,8 +39,8 @@ const Subjectcard = (props: Props) => {
       className="bg-black border-[0.5px] border-zinc-600 min-w-80 h-40 hover:border-white"
     >
       <CardHeader className="absolute z-10 top-1 font-bold text-lg text-left">
-        <Skeleton isLoaded={!props.loading} className="rounded-md">
-          {props.loading ? "Subject Name" : props.name || "Subject"}
+        <Skeleton isLoaded={!props.loading} className="rounded-md doLowercase capitalize">
+          {props.loading ? "Subject Name" : capitalizeTitle(props.name) || "Subject"}
         </Skeleton>
       </CardHeader>
       <Image

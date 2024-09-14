@@ -182,14 +182,11 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
       // else {
       //   return Promise.reject(new Error(error.message));
       // }
-    } finally {
-      setLoading(false);
     }
   };
 
   const PDPData = async () => {
     if (!student) return;
-    setLoading(true);
     try {
       const res = await axios.get("/api/pdp", {
         params: {
