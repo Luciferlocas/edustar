@@ -30,8 +30,9 @@ const Navmenu = () => {
   const { loading } = useAttendance();
   const qoute = getRandomQuote();
   const { blob, userProfile } = useProfile();
+  
   const [time, setTime] = useState(
-    moment(new Date()).format("DD MMM YYYY  h:mm A")
+    "00:00"
   );
 
   useEffect(() => {

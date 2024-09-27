@@ -52,6 +52,7 @@ export default function Home() {
                 <button
                   className="focus:outline-none"
                   type="button"
+                  aria-label={isVisible ? "Passwrod Hidden" : "Password visible"}
                   onClick={() => setIsVisible(!isVisible)}
                 >
                   {isVisible ? <CutEye /> : <Eye />}
