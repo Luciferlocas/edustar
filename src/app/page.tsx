@@ -3,7 +3,6 @@
 import React, { useState, FormEvent } from "react";
 import Background from "@/components/Background";
 import { Input, Button } from "@nextui-org/react";
-import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { CutEye } from "@/components/CutEye";
 import { Eye } from "@/components/Eye";
@@ -71,8 +70,9 @@ export default function Home() {
               type="submit"
               isDisabled={password.length === 0 || username.length === 0}
               isLoading={loading}
+              aria-label={loading ? "Signing in..." : "Sign in"}
             >
-              Sign in
+              {loading ? "Signing in..." : "Sign in"}
             </Button>
           </form>
         </div>
