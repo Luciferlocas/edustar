@@ -28,6 +28,7 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
+        <meta name="monetag" content="e69f213eb57c36d98bc22d4e617534ca" />
       </head>
       <body className={`${inter.className}`}>
         <SpeedInsights />
