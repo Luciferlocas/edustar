@@ -28,6 +28,7 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
+        <script src="https://quge5.com/88/tag.min.js" data-zone="199781" async data-cfasync="false"></script>
         <meta name="monetag" content="e69f213eb57c36d98bc22d4e617534ca" />
       </head>
       <body className={`${inter.className}`}>
