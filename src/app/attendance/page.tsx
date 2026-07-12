@@ -11,6 +11,9 @@ import { ScrollShadow } from "@nextui-org/react";
 import GraphCard from "@/components/Graph";
 import { motion } from "framer-motion";
 import TotalCard from "@/components/TotalCard";
+import SubjectAggregateCard from "@/components/SubjectAggregateCard";
+import SubjectAggregateChart from "@/components/SubjectAggregateChart";
+import MissableClassesOverlay from "@/components/MissableClassesOverlay";
 
 const Dashboard = () => {
   const { data } = useAuth();
@@ -49,6 +52,14 @@ const Dashboard = () => {
   return (
     <div className="px-4 min-h-screen w-screen bg-black flex flex-col gap-2">
       <Navmenu />
+      {/* Missable Classes Overlay */}
+      {particular && particular.length > 0 && (
+        <MissableClassesOverlay
+          total={total.overallLecture}
+          present={total.overallPresent}
+          loading={loading}
+        />
+      )}
       {particular ? (
         <main className="flex md:flex-row flex-col-reverse gap-4 w-full">
           <ScrollShadow
@@ -121,6 +132,31 @@ const Dashboard = () => {
             >
               <GraphCard />
             </motion.div>
+            
+            {/* Add Subject Aggregate Visualization Section */}
+            <div className="flex lg:flex-row flex-col gap-4">
+              {/* Subject Aggregate Chart */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                variants={cardVariants}
+                transition={{ duration: 0.5, delay: 2.3 }}
+                className="w-full lg:w-1/2"
+              >
+                <SubjectAggregateChart />
+              </motion.div>
+              
+              {/* Subject Aggregate List */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                variants={cardVariants}
+                transition={{ duration: 0.5, delay: 2.5 }}
+                className="w-full lg:w-1/2"
+              >
+                <SubjectAggregateCard />
+              </motion.div>
+            </div>
           </ScrollShadow>
           <ScrollShadow
             orientation="horizontal"
