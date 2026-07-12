@@ -139,7 +139,7 @@ export default function PasswordModal(prop: Props) {
                 }
               />
               <Button
-                variant="flat"
+                variant={"flat" as any}
                 className="font-bold mt-6 ml-auto"
                 color="primary"
                 type="submit"

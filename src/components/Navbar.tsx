@@ -95,7 +95,7 @@ const Navmenu = () => {
           </DropdownTrigger>
           <DropdownMenu
             aria-label="Profile Actions"
-            variant="flat"
+            variant={"flat" as any}
             onAction={(key) => {
               if (key === "openProfile") {
                 profileModal.onOpen();

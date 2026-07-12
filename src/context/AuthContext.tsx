@@ -15,6 +15,7 @@ import { toast, Toaster } from "sonner";
 interface AuthContextType {
   loading: boolean;
   login: (username: string, password: string) => Promise<void>;
+  relogin: () => Promise<boolean>;
   data: dataType;
   logout: () => void;
 }
@@ -66,6 +67,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           sameSite: "Strict",
           secure: true,
         });
+        const creds = btoa(JSON.stringify({ username, password }));
+        localStorage.setItem("creds", creds);
         setData(response.data);
         router.push("/attendance");
       } else {
@@ -78,8 +81,33 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const relogin = async (): Promise<boolean> => {
+    const creds = localStorage.getItem("creds");
+    if (!creds) {
+      return false;
+    }
+    try {
+      const { username, password } = JSON.parse(atob(creds));
+      const response = await axios.post("/api/login", { username, password });
+      if (response.status === 200) {
+        const encoded = btoa(JSON.stringify(response.data));
+        Cookies.set("user", encoded, {
+          expires: 331,
+          sameSite: "Strict",
+          secure: true,
+        });
+        setData(response.data);
+        return true;
+      }
+    } catch (error) {
+      console.error("Relogin failed", error);
+    }
+    return false;
+  };
+
   const logout = () => {
     Cookies.remove("user");
+    localStorage.removeItem("creds");
     router.push("/");
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.getRegistrations().then((registrations) => {
@@ -99,7 +127,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ loading, login, logout, data }}>
+    <AuthContext.Provider value={{ loading, login, relogin, logout, data }}>
       <Toaster position="bottom-right" theme="dark" richColors/>
       {children}
     </AuthContext.Provider>

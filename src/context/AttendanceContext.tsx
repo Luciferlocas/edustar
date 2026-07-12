@@ -60,7 +60,7 @@ interface AttendanceProviderProps {
 const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
   children,
 }) => {
-  const { data } = useAuth();
+  const { data, relogin } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
   const [attendance, setAttendance] = useState([]);
   const [profile, setProfile] = useState([]);
@@ -170,6 +170,11 @@ const AttendanceProvider: React.FC<AttendanceProviderProps> = ({
         return Promise.reject(new Error("Failed to fetch attendance"));
       }
     } catch (error: any) {
+      const success = await relogin();
+      if (success) {
+        window.location.reload();
+        return;
+      }
       if (error.response) {
         return Promise.reject(
           new Error(
