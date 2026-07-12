@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Divider } from "@heroui/react";
 import LineChart from "./LineChart";
 import BarChart from "./BarChart";
 

@@ -7,7 +7,7 @@ import { useAttendance } from "@/context/AttendanceContext";
 import { useAuth } from "@/context/AuthContext";
 import Navmenu from "@/components/Navbar";
 import SubjectCard from "@/components/SubjectCard";
-import { ScrollShadow } from "@nextui-org/react";
+import { ScrollShadow } from "@heroui/react";
 import GraphCard from "@/components/Graph";
 import { motion } from "framer-motion";
 import TotalCard from "@/components/TotalCard";

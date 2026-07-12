@@ -6,7 +6,7 @@ import {
   Skeleton,
   Progress,
   useDisclosure,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import React from "react";
 import bg from "../../public/bg.jpg";
 import Image from "next/image";

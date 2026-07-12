@@ -9,7 +9,7 @@ import {
   Input,
   Button,
   useDisclosure,
-} from "@nextui-org/react";
+} from "@heroui/react";
 
 type UseDisclosureReturn = ReturnType<typeof useDisclosure>;
 import { useProfile } from "@/context/ProfileContext";

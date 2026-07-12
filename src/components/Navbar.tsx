@@ -14,7 +14,7 @@ import {
   Skeleton,
   useDisclosure,
   DropdownSection,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import moment from "moment";
 import { useAttendance } from "@/context/AttendanceContext";
 import { useAuth } from "@/context/AuthContext";

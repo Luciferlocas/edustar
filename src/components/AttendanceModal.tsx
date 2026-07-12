@@ -9,7 +9,7 @@ import {
   CardBody,
   Divider,
   useDisclosure,
-} from "@nextui-org/react";
+} from "@heroui/react";
 
 type UseDisclosureReturn = ReturnType<typeof useDisclosure>;
 import moment from "moment";

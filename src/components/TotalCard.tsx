@@ -8,7 +8,7 @@ import {
   CardFooter,
   Progress,
   useDisclosure,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import Image from "next/image";
 import PdpModal from "./PdpModal";
 

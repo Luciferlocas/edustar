@@ -2,7 +2,7 @@
 
 import React, { useState, FormEvent } from "react";
 import Background from "@/components/Background";
-import { Input, Button } from "@nextui-org/react";
+import { Input, Button } from "@heroui/react";
 import { useAuth } from "@/context/AuthContext";
 import { CutEye } from "@/components/CutEye";
 import { Eye } from "@/components/Eye";
