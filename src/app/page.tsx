@@ -69,7 +69,7 @@ export default function Home() {
               variant="flat"
               color="primary"
               type="submit"
-              isDisabled={password.length === 0 || username.length === 0}
+              // isDisabled={password.length === 0 || username.length === 0}
               isLoading={loading}
               aria-label={loading ? "Signing in..." : "Sign in"}
             >

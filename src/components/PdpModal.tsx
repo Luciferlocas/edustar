@@ -8,8 +8,10 @@ import {
   CardHeader,
   CardBody,
   Divider,
+  useDisclosure,
 } from "@nextui-org/react";
-import type { UseDisclosureReturn } from "@nextui-org/use-disclosure";
+
+type UseDisclosureReturn = ReturnType<typeof useDisclosure>;
 import moment from "moment";
 import { motion } from "framer-motion";
 import { useAttendance } from "@/context/AttendanceContext";

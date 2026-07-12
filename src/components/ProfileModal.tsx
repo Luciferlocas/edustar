@@ -6,8 +6,10 @@ import {
   ModalBody,
   Skeleton,
   Divider,
+  useDisclosure,
 } from "@nextui-org/react";
-import type { UseDisclosureReturn } from "@nextui-org/use-disclosure";
+
+type UseDisclosureReturn = ReturnType<typeof useDisclosure>;
 import { useProfile } from "@/context/ProfileContext";
 import moment from "moment";
 

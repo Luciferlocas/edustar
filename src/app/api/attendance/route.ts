@@ -1,18 +1,15 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== "GET") {
-    return res.status(405).json({ message: "Method Not Allowed" });
-  }
-
-  const { userId, accessToken, sessionId, xToken } = req.query;
+export async function GET(req: NextRequest) {
+  const { searchParams } = req.nextUrl;
+  const userId = searchParams.get("userId");
+  const accessToken = searchParams.get("accessToken");
+  const sessionId = searchParams.get("sessionId");
+  const xToken = searchParams.get("xToken");
 
   if (!userId || !accessToken || !sessionId || !xToken) {
-    return res.status(400).json({ message: "Bad Request!" });
+    return NextResponse.json({ message: "Bad Request!" }, { status: 400 });
   }
 
   try {
@@ -28,23 +25,21 @@ export default async function handler(
         headers: {
           Cookie: `_ga_P21KD3ESV2=GS1.1.1717220027.3.0.1717220027.0.0.0; _ga=GA1.2.257840654.1716482344; _gid=GA1.2.287587932.1716482344`,
           Authorization: `Bearer ${accessToken}`,
-          "X-Wb": 1,
+          "X-Wb": "1",
           Sessionid: sessionId,
-          "X-Contextid": 194,
+          "X-Contextid": "194",
           "X-Userid": userId,
           X_token: xToken,
-          "X-Rx": 1,
+          "X-Rx": "1",
         },
       }
     );
 
-    res.status(200).json(response.data);
+    return NextResponse.json(response.data);
   } catch (error: any) {
     console.error("Error during API call:", error);
-
-    if (error.code === "ENOTFOUND" || error.code === "ECONNREFUSED") {
-      return res.status(503).json({ message: "No internet connection." });
-    }
-    res.status(500).json({ message: "Internal Server Error" });
+    const status = error.response?.status || 500;
+    const message = error.response?.data?.message || "Internal Server Error";
+    return NextResponse.json({ message }, { status });
   }
 }

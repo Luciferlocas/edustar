@@ -67,7 +67,7 @@ const SubjectAggregateChart = () => {
         color: "white",
         font: {
           size: 14,
-          weight: "bold",
+          weight: "bold" as const,
         },
       },
       tooltip: {
